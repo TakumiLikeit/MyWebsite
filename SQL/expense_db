@@ -1,0 +1,38 @@
+CREATE DATABASE expensemanagement DEFAULT CHARACTER SET utf8;
+USE expensemanagement;
+
+CREATE TABLE expense (id SERIAL AUTO_INCREMENT, user_id int NOT NULL,
+category_id int NOT NULL, name varchar(255) NOT NULL, price int NOT NULL,
+date DATE NOT NULL, note text, create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL);
+
+CREATE TABLE category (id SERIAL AUTO_INCREMENT, name varchar(255) NOT NULL);
+
+CREATE TABLE user (id SERIAL AUTO_INCREMENT, login_id varchar(255) UNIQUE NOT NULL,
+name varchar(255) NOT NULL, password varchar(255) NOT NULL,
+create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL);
+
+
+INSERT INTO category (name) VALUE ('食費');
+INSERT INTO category (name) VALUE ('娯楽');
+INSERT INTO category (name) VALUE ('レストラン');
+INSERT INTO category (name) VALUE ('旅・レジャー');
+INSERT INTO category (name) VALUE ('交通');
+INSERT INTO category (name) VALUE ('医療');
+INSERT INTO category (name) VALUE ('パーソナルケア');
+INSERT INTO category (name) VALUE ('教育');
+INSERT INTO category (name) VALUE ('電子機器');
+INSERT INTO category (name) VALUE ('スマホ・通信');
+INSERT INTO category (name) VALUE ('住宅');
+INSERT INTO category (name) VALUE ('水道光熱費');
+INSERT INTO category (name) VALUE ('衣類');
+INSERT INTO category (name) VALUE ('その他');
+
+
+INSERT INTO user (login_id,name,password) VALUES ('admin','管理者','password');
+
+INSERT INTO expense (user_id,category_id,name,price,date,note)
+VALUES (1,1,'りんご',120,'2022-4-1','お腹がすいたため');
+INSERT INTO expense (user_id,category_id,name,price,date)
+VALUES (1,2,'温泉',120,'2022-4-5');
