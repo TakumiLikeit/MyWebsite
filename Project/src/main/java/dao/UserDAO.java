@@ -36,7 +36,8 @@ public class UserDAO {
 
     } catch (SQLException e) {
       System.out.println(e.getMessage());
-      throw new SQLException(e);
+      // throw new SQLException(e);
+      e.printStackTrace();
 
     } finally {
       if (con != null) {

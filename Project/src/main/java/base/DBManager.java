@@ -24,6 +24,7 @@ public class DBManager {
       return con;
 
     } catch (ClassNotFoundException | SQLException e) {
+      e.printStackTrace();
       throw new IllegalMonitorStateException();
     }
 
