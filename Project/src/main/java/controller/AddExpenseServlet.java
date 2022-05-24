@@ -47,6 +47,15 @@ public class AddExpenseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      request.setCharacterEncoding("UTF-8"); // 文字化け防止
+
+      String expenseName = request.getParameter("expense-name");
+      int price = Integer.valueOf(request.getParameter("price"));
+      String category = request.getParameter("category");
+
+
+      response.sendRedirect("ExpenseListServlet");
+
 	}
 
 }

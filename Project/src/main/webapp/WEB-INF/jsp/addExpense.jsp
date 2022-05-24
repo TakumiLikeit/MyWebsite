@@ -76,7 +76,7 @@
                             <label for="exspense-name" class="col-lg-2 col-form-label">出費名</label>
                             <div class="col-lg-9">
                                 <!--ここのdivにもclassを付与して良い-->
-                                <input id="expense-name" type="text" class="form-control">
+                                <input id="expense-name" name="expense-name" type="text" class="form-control">
                                 <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                             <label for="price" class="col-lg-2 col-form-label">値段</label>
                             <div class="col-lg-9">
                                 <!--ここのdivにもclassを付与して良い-->
-                                <input id="price" type="text" class="form-control">
+                                <input id="price" name="price" type="text" class="form-control">
                                 <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
