@@ -1,9 +1,9 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,15 +19,15 @@ public class ExpenseDAO {
     System.out.println("ExpenseDAO、findAll内");
     List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
     Connection con = null;
-    // PreparedStatement st = null;
+    PreparedStatement st = null;
     
     try {
       con = DBManager.getConnection();
       String sql = "SELECT * FROM expense";
-      Statement st = con.createStatement();
-      ResultSet rs = st.executeQuery(sql);
+      st = con.prepareStatement(sql);
+      ResultSet rs = st.executeQuery();
 
-      while (!rs.next()) {
+      while (rs.next()) {
         int id = rs.getInt("id");
         int userId = rs.getInt("user_id");
         int categoryId = rs.getInt("category_id");
@@ -37,17 +37,17 @@ public class ExpenseDAO {
         String note = rs.getString("note");
         Timestamp createDate = rs.getTimestamp("create_date");
         Timestamp updateDate = rs.getTimestamp("update_date");
-        // String categoryName = CategoryDAO.getCategoryName(categoryId);
+        String categoryName = CategoryDAO.getCategoryName(categoryId);
 
         ExpenseDataBeans edb = new ExpenseDataBeans(id, userId, categoryId, name, price,
-            expenseDate, note, createDate, updateDate);
+            expenseDate, note, createDate, updateDate, categoryName);
 
         expenseList.add(edb);
 
       }
 
-
       st.close();
+
     } catch (SQLException e) {
       e.printStackTrace();
       return null;

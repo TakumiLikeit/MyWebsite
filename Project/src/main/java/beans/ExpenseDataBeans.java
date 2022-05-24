@@ -21,7 +21,8 @@ public class ExpenseDataBeans implements Serializable {
   }
 
   public ExpenseDataBeans(int id, int userId, int categoryId, String name, int price,
-      Date expenseDate, String note, Timestamp createDate, Timestamp updateDate) {
+      Date expenseDate, String note, Timestamp createDate, Timestamp updateDate,
+      String categoryName) {
     super();
     this.id = id;
     this.userId = userId;
@@ -32,6 +33,7 @@ public class ExpenseDataBeans implements Serializable {
     this.note = note;
     this.createDate = createDate;
     this.updateDate = updateDate;
+    this.categoryName = categoryName;
   }
 
   // getterとsetter

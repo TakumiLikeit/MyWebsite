@@ -46,8 +46,6 @@ public class ExpenseListServlet extends HttpServlet {
       request.setAttribute("expenseList", expenseList);
 
 
-
-
       // expenseList.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);
 
