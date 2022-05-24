@@ -160,7 +160,7 @@
             </div>
             <!--最悪bodyを無くして、フォーマットを整える-->
             <div class="offset-10 my-3">
-                <a href=#expenseTotal id="jump">合計金額へ飛ぶ</a>
+                <a href=#totalExpense id="jump">合計金額へ飛ぶ</a>
             </div>
                 
                 <!--table-stripedで白黒のしましまが入り見やすくなる-->
@@ -192,16 +192,10 @@
 	                            <td class="table-h col-3">${expense.price}</td>
 	                        </tr>
 						</c:forEach>
-						<tr>
-                            <td class="table-h col-3">2022年4月2日</td>
-                            <td class="table-h col-3">娯楽</td>
-                            <td><a href="UpdateExpenseServlet?id=2" class="table-h col-3">温泉</a></td>
-                            <td class="table-h col-3">2000</td>
-                        </tr>
 
                         <tr>
-                            <th style="text-align:right" class="table-h" colspan="3" id="expenseTotal">合計金額：</th>
-                            <td style="font-size:20px" class="table-h">2120円</td>
+                            <th style="text-align:right" class="table-h" colspan="3" id="totalExpense">合計金額：</th>
+                            <td style="font-size:20px" class="table-h">${totalExpense}</td>
                         </tr>
                     </tbody>
                 </table>            

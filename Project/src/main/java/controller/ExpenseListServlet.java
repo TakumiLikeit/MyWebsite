@@ -45,6 +45,14 @@ public class ExpenseListServlet extends HttpServlet {
       List<ExpenseDataBeans> expenseList = ExpenseDAO.findAll();
       request.setAttribute("expenseList", expenseList);
 
+      // 合計金額の計算（for_loop,他のやり方がありそう）
+      int totalExpense = 0;
+      for (int i = 0; i < expenseList.size(); i++) {
+        ExpenseDataBeans expense = expenseList.get(i);
+        totalExpense += expense.getPrice();
+      }
+      request.setAttribute("totalExpense", totalExpense);
+
 
       // expenseList.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);

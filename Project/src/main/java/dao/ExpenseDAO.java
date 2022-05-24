@@ -23,7 +23,7 @@ public class ExpenseDAO {
     
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM expense";
+      String sql = "SELECT * FROM expense ORDER BY date ASC";
       st = con.prepareStatement(sql);
       ResultSet rs = st.executeQuery();
 
