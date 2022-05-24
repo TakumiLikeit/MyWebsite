@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>テスト</title>
+    <!-- import Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-light text-">
+            <h2>Header</h2>
+        </nav>
+    </header>
+
+    <!--radioボタン-->
+    <div class="form-group row">
+        <div>
+            <input type="radio" name="gender1" id="gender" class="col-form-label">
+        </div>
+        <label for="gender1">man</label>
+        <div>
+            <input type="radio" name="gender2" id="gender" class="col-form-label">
+        </div>
+        <label for="gender3">man</label>
+        <div>
+            <input type="radio" name="gender3" id="gender" class="col-form-label">
+        </div>
+        <label for="gender2">man</label>
+    </div>
+
+    <!--selectボタン-->
+    <div class="form-group row">
+        <label for="category">カテゴリ</label>
+        <div>
+            <!--<input type="select" name="category" id="category" class="col-form-label">-->
+            <select id="category" name="category"  class="colform-label">
+                <option value="food">食費</option>
+                <option value="leisure">レジャー</option>
+                <option value="transport">交通費</option>
+                <option value="medical">医療費</option>
+                <option value="travel">旅費</option>
+                <option value="others">その他</option>
+            </select>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
