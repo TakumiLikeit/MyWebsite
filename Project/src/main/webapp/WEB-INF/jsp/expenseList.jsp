@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -162,6 +165,7 @@
                 
                 <!--table-stripedで白黒のしましまが入り見やすくなる-->
                 <table class="table table-striped mb-1">
+
                     <!--theadでtableのheader-->
                     <thead>
                         <tr>
@@ -172,16 +176,23 @@
                         </tr>
                     </thead>
                     <!--tbodyでtableのbody-->
+                	
+                	
+                	
                     <tbody>
-                        <tr>
-                            <td class="table-h col-3">2022年4月1日</td>
-                            <td class="table-h col-3">食費</td>
-                            <td>
-	                            <a href="UpdateExpenseServlet?id=1" class="table-h col-3">りんご</a>
-                            </td>
-                            <td class="table-h col-3">120</td>
-                        </tr>
-                        <tr>
+                    	<c:forEach  var="expense" items="${expenseList}">
+                    
+	                        <tr>
+	                            <td class="table-h col-3"><fmt:formatDate value="${expense.expenseDate}" pattern="yyyy年MM月dd日" /></td>
+	                            <!-- categoryNameをbeansに追加する必要あり -->
+	                            <td class="table-h col-3">${expense.categoryName}</td>
+	                            <td>
+		                            <a href="UpdateExpenseServlet?id=${expense.id}" class="table-h col-3">${expense.name}</a>
+	                            </td>
+	                            <td class="table-h col-3">${expense.price}</td>
+	                        </tr>
+						</c:forEach>
+						<tr>
                             <td class="table-h col-3">2022年4月2日</td>
                             <td class="table-h col-3">娯楽</td>
                             <td><a href="UpdateExpenseServlet?id=2" class="table-h col-3">温泉</a></td>
@@ -192,7 +203,6 @@
                             <th style="text-align:right" class="table-h" colspan="3" id="expenseTotal">合計金額：</th>
                             <td style="font-size:20px" class="table-h">2120円</td>
                         </tr>
-
                     </tbody>
                 </table>            
 

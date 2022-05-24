@@ -1,13 +1,16 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import beans.ExpenseDataBeans;
 import beans.UserDataBeans;
+import dao.ExpenseDAO;
 import util.ExpenseHelper;
 
 /**
@@ -37,6 +40,13 @@ public class ExpenseListServlet extends HttpServlet {
         response.sendRedirect("LoginServlet");
         return;
       }
+
+      // 全ての出費を取得
+      List<ExpenseDataBeans> expenseList = ExpenseDAO.findAll();
+      request.setAttribute("expenseList", expenseList);
+
+
+
 
       // expenseList.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);

@@ -14,6 +14,7 @@ public class ExpenseDataBeans implements Serializable {
   private String note;
   private Timestamp createDate;
   private Timestamp updateDate;
+  private String categoryName;
 
   public ExpenseDataBeans() {
     super();
@@ -106,6 +107,13 @@ public class ExpenseDataBeans implements Serializable {
     this.updateDate = updateDate;
   }
 
+  public String getCategoryName() {
+    return categoryName;
+  }
+
+  public void setCategoryName(String categoryName) {
+    this.categoryName = categoryName;
+  }
 
 
 
