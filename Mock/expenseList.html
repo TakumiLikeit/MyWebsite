@@ -16,6 +16,10 @@
             height: 50px;
         }
 
+        .inline {
+            display: inline;
+        }
+
         th {
             font-size: 20px;
             text-align: center;
@@ -35,9 +39,27 @@
             <!--navってなんだ-->
             <!--navをいれるとちょっと下がる-->
             <div class="container-fluid">
-                <div class="col-6 offset-1">
+
+                <div class="navbar-brand">
                     <h4>出費一覧画面</h4>
                 </div>
+
+                
+                <ul class="navbar-nav ml-auto">
+                    <!--横並べにする-->
+                    <div class="form-inline">
+                        <!--リスト、classはnav-item-->
+                        <li class="nav-item mr-2">
+                            <span class="navbar-text">アラキ さん</span>
+                        </li>
+
+                        <li class="nav-item">
+                            <!--nav-linkにするとアンダーバーが表示されない-->
+                            <a class="nav-link text-danger" href="LogoutServlet">ログアウト</a>
+                        </li>
+                    </div>
+                </ul>
+
             </div>
         </nav>
     </header>
