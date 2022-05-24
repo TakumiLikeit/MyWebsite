@@ -10,7 +10,7 @@ import beans.UserDataBeans;
 public class UserDAO {
 
 
-  public UserDataBeans getUser(String loginId, String password) throws SQLException {
+  public static UserDataBeans getUser(String loginId, String password) throws SQLException {
     UserDataBeans udb = new UserDataBeans();
     Connection con = null;
     PreparedStatement st = null;
