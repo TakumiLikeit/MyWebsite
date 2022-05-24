@@ -75,10 +75,10 @@
 
                 <div class="row">
                     <div class="offset-3 col-3">
-                        <a href="expenseListServlet" class="btn btn-primary btn-block">いいえ</a>
+                        <a href="ExpenseListServlet" class="btn btn-primary btn-block">いいえ</a>
                     </div>
                     <div class="col-3">
-                        <form action="expenseDeleteServle" method="post">
+                        <form action="DeleteExpenseServlet" method="post">
                                 <input type="button" id="yes" name="yes" value="はい" class="btn btn-danger  btn-block">
                         </form>
                     </div>
@@ -89,7 +89,7 @@
 
         <!--containerの外cardの外-->
         <div class="mt-4">
-            <a href="expenseList.html">出費一覧へ戻る</a>
+            <a href="ExpenseListServlet">出費一覧へ戻る</a>
         </div>
     </div>
 

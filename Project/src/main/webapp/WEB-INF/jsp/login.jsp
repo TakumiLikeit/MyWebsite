@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
     
     
 <!DOCTYPE html>
@@ -31,10 +33,13 @@
         <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
 
         <!--とりあえずcontainerで囲む、offsetは必要なくなる?-->
+        <!--全体をoffset-3で囲んでしまい、col-6をセットしてしまえば真ん中にフォーマットできる-->
         <div class="col-6 offset-3">
-            <!--全体をoffset-3で囲んでしまい、col-6をセットしてしまえば真ん中にフォーマットできる-->
-            <div class="alert alert-danger" role="alert">ログインIDまたはパスワードが異なります。</div>
-            <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
+        
+        	<c:if test="${errMsg != null}">
+				<div class="alert alert-danger" role="alert">${errMsg}</div>
+			</c:if>
+			
             <form action="LoginServlet" method="post">
                 <div class="form-group row">
                     <!--入力部品をform-groupで囲み-->
@@ -42,7 +47,7 @@
                     <label for="loginId" class="col-lg-3 col-form-label">ログインID</label>
                     <div class="col-lg-9">
                         <!--ここのdivにもclassを付与して良い-->
-                        <input id="loginId" type="text" class="form-control">
+                        <input id="login-id" type="text" class="form-control" value="${loginId}">
                         <!--入力部分をform-controlで囲む-->
                     </div>
                 </div>
@@ -50,7 +55,7 @@
                 <div class="form-group row">
                     <label for="password" class="col-lg-3 col-form-label">パスワード</label>
                     <div class="col-lg-9">
-                        <input id="password" type="text" class="form-control">
+                        <input id="password" type="password" class="form-control" value="${password}">
                     </div>
                 </div>
                 <button class="btn btn-secondary btn-block" type="submit">ログイン</button>

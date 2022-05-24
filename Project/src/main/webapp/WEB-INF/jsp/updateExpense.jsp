@@ -137,7 +137,7 @@
                         </div>
 
                         <button class="btn btn-primary offset-7 col-2" type="submit">更新</button>
-                        <a href="deleteExpenseServlet" class="btn btn-danger col-2">削除する</a>
+                        <a href="DeleteExpenseServlet" class="btn btn-danger col-2">削除する</a>
                     </form>
                 </div>
             </div>
@@ -145,7 +145,7 @@
 
         <!--containerの外cardの外-->
         <div class="mt-4">
-            <a href="expenseList.html">出費一覧へ戻る</a>
+            <a href="ExpenseListServlet">出費一覧へ戻る</a>
         </div>
     </div>
     </div>

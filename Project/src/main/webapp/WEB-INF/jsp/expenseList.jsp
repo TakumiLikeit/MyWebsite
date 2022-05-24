@@ -49,7 +49,7 @@
                     <div class="form-inline">
                         <!--リスト、classはnav-item-->
                         <li class="nav-item mr-2">
-                            <span class="navbar-text">アラキ さん</span>
+                            <span class="navbar-text">${userInfo.name} さん</span>
                         </li>
 
                         <li class="nav-item">
@@ -71,7 +71,7 @@
 
         <!--my-1で上下にマージン追加-->
         <div class="offset-10 my-2">
-            <a href="addExpense.html">出費を追加する</a>
+            <a href="AddExpenseServlet">出費を追加する</a>
         </div>
 
         <div class="card mb-1">
@@ -176,13 +176,15 @@
                         <tr>
                             <td class="table-h col-3">2022年4月1日</td>
                             <td class="table-h col-3">食費</td>
-                            <td><a href="ExpenseDetailServlet?id=1" class="table-h col-3">りんご</a></td>
+                            <td>
+	                            <a href="UpdateExpenseServlet?id=1" class="table-h col-3">りんご</a>
+                            </td>
                             <td class="table-h col-3">120</td>
                         </tr>
                         <tr>
                             <td class="table-h col-3">2022年4月2日</td>
                             <td class="table-h col-3">娯楽</td>
-                            <td><a href="ExpenseDetailServlet?id=2" class="table-h col-3">温泉</a></td>
+                            <td><a href="UpdateExpenseServlet?id=2" class="table-h col-3">温泉</a></td>
                             <td class="table-h col-3">2000</td>
                         </tr>
 

@@ -34,10 +34,10 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        UserDataBeans udb = (UserDataBeans) session.getAttribute("user");
+        UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
         if (udb != null) {
-          response.sendRedirect("UserListServlet");
+          response.sendRedirect("ExpenseListServlet");
           return;
         }
 
@@ -55,34 +55,39 @@ public class LoginServlet extends HttpServlet {
 
       // パスワードの暗号化
 
+      UserDataBeans udb = null;
+
       try {
 
-        UserDataBeans udb = UserDAO.getUser(loginId, password);
+        udb = UserDAO.getUser(loginId, password);
 
         /** テーブルに該当のデータが見つからなかった場合 * */
         if (udb == null) {
+          System.out.println("doPost内、該当のユーザがいません");
           request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
           request.setAttribute("loginId", loginId);
           request.setAttribute("password", password);
 
           // login.jspへフォワード
           request.getRequestDispatcher(ExpenseHelper.LOGIN_PAGE).forward(request, response);
-          return;
+          // return;
         }
-
-        /** テーブルに該当のデータが見つかった場合 * */
-        // セッションにユーザの情報をセット
-        HttpSession session = request.getSession();
-        session.setAttribute("userInfo", udb);
-
-        // 出費一覧のサーブレットにリダイレクト
-        response.sendRedirect("ExpenseListServlet");
 
       } catch (Exception e) {
         e.printStackTrace();
         // session.setAttribute("errorMessage", e.toString());
         // response.sendRedirect("Error");
       }
+
+      System.out.println("doPost内、該当のデータを発見");
+
+      /** テーブルに該当のデータが見つかった場合 * */
+      // セッションにユーザの情報をセット
+      HttpSession session = request.getSession();
+      session.setAttribute("userInfo", udb);
+
+      // 出費一覧のサーブレットにリダイレクト
+      response.sendRedirect("ExpenseListServlet");
 
     }
 

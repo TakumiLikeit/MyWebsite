@@ -11,16 +11,16 @@ import beans.UserDataBeans;
 import util.ExpenseHelper;
 
 /**
- * Servlet implementation class UpdateExpenseServlet
+ * Servlet implementation class ExpenseDeleteServlet
  */
-@WebServlet("/UpdateExpenseServlet")
-public class UpdateExpenseServlet extends HttpServlet {
+@WebServlet("/DeleteExpenseServlet")
+public class DeleteExpenseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateExpenseServlet() {
+    public DeleteExpenseServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,15 +39,15 @@ public class UpdateExpenseServlet extends HttpServlet {
         return;
       }
 
-
-      // updateList.jspへフォワード
-      request.getRequestDispatcher(ExpenseHelper.EXPENSE_UPDATE_PAGE).forward(request, response);
-    }
+      // deleteExpense.jspへフォワード
+      request.getRequestDispatcher(ExpenseHelper.EXPENSE_DELETE_PAGE).forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	}
 
 }
