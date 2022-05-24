@@ -49,10 +49,34 @@ public class AddExpenseServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8"); // 文字化け防止
 
+      // ここの段階では、まだ全部Stringの方が空欄かどうか判別しやすい
       String expenseName = request.getParameter("expense-name");
-      int price = Integer.valueOf(request.getParameter("price"));
-      String category = request.getParameter("category");
+      // int price = Integer.valueOf(request.getParameter("price"));
+      String price = request.getParameter("price");
+      String categoryName = request.getParameter("category");
+      // Date expenseDate = Date.valueOf(request.getParameter("expense-date"));
+      String expenseDate = request.getParameter("expense-date");
+      String note = request.getParameter("note");
 
+      // 例外処理。（現段階では、空欄がある場合のみ）
+      // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
+      if (ExpenseHelper.isEmpty(expenseName, price, categoryName, expenseDate)) {
+        request.setAttribute("errMsg", "空欄があります");
+
+        request.setAttribute("expenseName", expenseName);
+        request.setAttribute("price", price);
+        request.setAttribute("categoryName", categoryName);
+        request.setAttribute("expenseDate", expenseDate);
+        request.setAttribute("note", note);
+
+        request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
+        return;
+      } else {
+
+        // ExpenseDAO内に、出費を追加するメソッドを追加する（追加したら、ExpenseListServletへリダイレクトする）
+        // ここわかんない！（selectからデータを取得する関係）
+
+      }
 
       response.sendRedirect("ExpenseListServlet");
 

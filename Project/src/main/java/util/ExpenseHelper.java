@@ -11,4 +11,20 @@ public class ExpenseHelper {
   public static final String EXPENSE_UPDATE_PAGE = "/WEB-INF/jsp/updateExpense.jsp";
   // 出費削除ページ
   public static final String EXPENSE_DELETE_PAGE = "/WEB-INF/jsp/deleteExpense.jsp";
+
+
+  // String, int, String, Date
+  // 入力項目が空欄じゃないか確認
+
+  public static boolean isEmpty(String expenseName, String price, String categoryName,
+      String expenseDate) {
+
+    if (expenseName.equals("") || price.equals("") || categoryName.equals("")
+        || expenseDate.equals("")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

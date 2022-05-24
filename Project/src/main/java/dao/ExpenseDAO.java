@@ -13,8 +13,7 @@ import beans.ExpenseDataBeans;
 
 public class ExpenseDAO {
 
-  //とりあえずメソッドを作りたい、でも先にBeansを作成しないと、クラスを定義できない
-
+  // 全ての出費を取得するメソッド
   public static List<ExpenseDataBeans> findAll() {
     System.out.println("ExpenseDAO、findAll内");
     List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
@@ -64,4 +63,36 @@ public class ExpenseDAO {
     return expenseList;
   }
   
+  public static int addExpense() {
+    System.out.println("ExpenseDAO、addExpense内");
+    Connection con = null;
+    PreparedStatement st = null;
+
+    try {
+      con = DBManager.getConnection();
+      String sql = "INSERT INTO expense (category_id,name,price,date,note) VALUES (?,?,?,?,?)";
+      st = con.prepareStatement(sql);
+      int result = st.executeUpdate();
+
+
+
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return 0;
+    } finally {
+      if (con != null) {
+        try {
+          con.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    return 0;
+  }
+
 }

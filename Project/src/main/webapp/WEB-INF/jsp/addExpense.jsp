@@ -96,10 +96,10 @@
 
                         <!--カテゴリはcheckbox,select,radioなどがあるが、selectが良い-->
                         <div class="form-group row">
-                            <label for="category" class="col-lg-2 col-form-label">カテゴリ</label>
+                            <label for="categoryName" class="col-lg-2 col-form-label">カテゴリ</label>
                             <div>
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
-                                <select id="category" name="category" class="form-control offset-1">
+                                <select id="categoryName" name="category" class="form-control offset-1">
                                     <option value="">選択する</option>
                                     <option value="food">食費</option>
                                     <option value="leisure">娯楽</option>
@@ -120,20 +120,16 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="duration" class="control-label col-2">期間</label>
+                            <label for="expense-date" class="control-label col-2">日付</label>
                             <div class="col-lg-4">
-                                <input id="duration1" name="start-date" type="date" class="form-control">
-                            </div>
-                            <div class="col-1" style="text-align:center;">~</div>
-                            <div class="col-lg-4">
-                                <input id="duration2" name="end-date" type="date" class="form-control">
+                                <input id="expense-date" name="expense-date" type="date" class="form-control" value="${expenseDate}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="note" class="col-lg-2 col-form-label">メモ</label>
                             <div class="col-lg-9">
-                                <textarea id="note" name="note" class="form-control" rows="4" cols="50"></textarea>
+                                <textarea id="note" name="note" class="form-control" rows="4" cols="50" value="${note}"></textarea>
                             </div>
                         </div>
 
