@@ -42,7 +42,6 @@ public class ExpenseListServlet extends HttpServlet {
       }
 
       int userId = udb.getId();
-      System.out.println("ExpenseListServlet内、doGet、userId: " + userId);
 
       // 今ログインしているユーザーのIDをもとに、全ての出費を取得
       List<ExpenseDataBeans> expenseList = ExpenseDAO.findAll(userId);

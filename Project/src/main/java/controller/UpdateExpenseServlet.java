@@ -63,10 +63,8 @@ public class UpdateExpenseServlet extends HttpServlet {
 
       // ここの段階では、まだ全部Stringの方が空欄かどうか判別しやすい
       String expenseName = request.getParameter("expense-name");
-      // int price = Integer.valueOf(request.getParameter("price"));
       String price = request.getParameter("price");
       String categoryId = request.getParameter("category");
-      // Date expenseDate = Date.valueOf(request.getParameter("expense-date"));
       String expenseDate = request.getParameter("expense-date");
       String note = request.getParameter("note");
 

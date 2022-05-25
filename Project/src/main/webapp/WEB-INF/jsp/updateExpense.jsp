@@ -68,7 +68,7 @@
                 <div class="col-8 offset-2 my-sm-3">
                     <!--全体をoffset-3で囲んでしまい、col-6をセットしてしまえば真ん中にフォーマットできる-->
                     <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
-                    <form action="ExpenseListServlet" method="post">
+                    <form action="UpdateExpenseServlet" method="post">
 
 						<!-- idをサーブレットに返さなければいけない -->
 						<input id="expense-id" name="expense-id" type="hidden" value="${expense.id}">
