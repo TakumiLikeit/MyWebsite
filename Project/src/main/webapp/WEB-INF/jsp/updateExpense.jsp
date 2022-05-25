@@ -105,21 +105,21 @@
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 <!--requestパラメターから値をゲットして、selectで初期化する方法を見つけなければならない-->
                                 <select id="category" name="category" class="form-control offset-1">
-                                    <option ${expense.categoryId.equals("")?"selected":""} value="">選択する</option>
-                                    <option ${expense.categoryId.equals("1")?"selected":""} value="1">食費</option>
-                                    <option ${expense.categoryId.equals("2")?"selected":""} value="2">娯楽</option>
-                                    <option ${expense.categoryId.equals("3")?"selected":""} value="3">レストラン</option>
-                                    <option ${expense.categoryId.equals("4")?"selected":""} value="4">旅・レジャー</option>
-                                    <option ${expense.categoryId.equals("5")?"selected":""} value="5">交通</option>
-                                    <option ${expense.categoryId.equals("6")?"selected":""} value="6">医療</option>
-                                    <option ${expense.categoryId.equals("7")?"selected":""} value="7">パーソナルケア</option>
-                                    <option ${expense.categoryId.equals("8")?"selected":""} value="8">教育</option>
-                                    <option ${expense.categoryId.equals("9")?"selected":""} value="9">電子機器</option>
-                                    <option ${expense.categoryId.equals("10")?"selected":""} value="10">スマホ・通信</option>
-                                    <option ${expense.categoryId.equals("11")?"selected":""} value="11">住宅</option>
-                                    <option ${expense.categoryId.equals("12")?"selected":""} value="12">水道光熱費</option>
-                                    <option ${expense.categoryId.equals("13")?"selected":""} value="13">衣類</option>
-                                    <option ${expense.categoryId.equals("14")?"selected":""} value="14">その他</option>
+                                    <option ${expense.categoryId==0?"selected":""} value="">選択する</option>
+                                    <option ${expense.categoryId==1?"selected":""} value="1">食費</option>
+                                    <option ${expense.categoryId==2?"selected":""} value="2">娯楽</option>
+                                    <option ${expense.categoryId==3?"selected":""} value="3">レストラン</option>
+                                    <option ${expense.categoryId==4?"selected":""} value="4">旅・レジャー</option>
+                                    <option ${expense.categoryId==5?"selected":""} value="5">交通</option>
+                                    <option ${expense.categoryId==6?"selected":""} value="6">医療</option>
+                                    <option ${expense.categoryId==7?"selected":""} value="7">パーソナルケア</option>
+                                    <option ${expense.categoryId==8?"selected":""} value="8">教育</option>
+                                    <option ${expense.categoryId==9?"selected":""} value="9">電子機器</option>
+                                    <option ${expense.categoryId==10?"selected":""} value="10">スマホ・通信</option>
+                                    <option ${expense.categoryId==11?"selected":""} value="11">住宅</option>
+                                    <option ${expense.categoryId==12?"selected":""} value="12">水道光熱費</option>
+                                    <option ${expense.categoryId==13?"selected":""} value="13">衣類</option>
+                                    <option ${expense.categoryId==14?"selected":""} value="14">その他</option>
                                 </select>
                             </div>
                         </div>
