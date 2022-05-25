@@ -101,7 +101,7 @@
                             <div>
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 
-                                <!-- ここ変える、5/25 -->
+                                <!-- ここ変えた、5/25 -->
                                 <select id="categoryName" name="category" class="form-control offset-1">
                                     <option ${categoryId.equals("")?"selected":""} value="">選択する</option>
                                     <option ${categoryId.equals("1")?"selected":""} value="1">食費</option>

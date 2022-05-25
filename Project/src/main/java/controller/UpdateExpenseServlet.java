@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import beans.UserDataBeans;
+import dao.ExpenseDAO;
 import util.ExpenseHelper;
 
 /**
@@ -48,6 +49,52 @@ public class UpdateExpenseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      request.setCharacterEncoding("UTF-8"); // 文字化け防止
+      
+      //expenseのidを取得（出費id）
+      String expenseId = request.getParameter("id");
+
+      // ここの段階では、まだ全部Stringの方が空欄かどうか判別しやすい
+      String expenseName = request.getParameter("expense-name");
+      // int price = Integer.valueOf(request.getParameter("price"));
+      String price = request.getParameter("price");
+      String categoryId = request.getParameter("category");
+      // Date expenseDate = Date.valueOf(request.getParameter("expense-date"));
+      String expenseDate = request.getParameter("expense-date");
+      String note = request.getParameter("note");
+
+      // 例外処理。（現段階では、空欄がある場合のみ）
+      // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
+      if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
+        System.out.println("AddExpenseServlet、doPost内、isEmptyの場合");
+        request.setAttribute("errMsg", "入力必須項目に空欄があります");
+
+        request.setAttribute("expenseName", expenseName);
+        request.setAttribute("price", price);
+        request.setAttribute("categoryId", categoryId);
+        request.setAttribute("expenseDate", expenseDate);
+        request.setAttribute("note", note);
+
+        request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
+        // return;
+      } else {
+        System.out.println("AddExpenseServlet、doPost内、isEmptyでない場合");
+
+        HttpSession session = request.getSession();
+        UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
+
+        String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い
+
+        if (ExpenseDAO.updateExpenseSuccess(expenseId, userId, expenseName, price, categoryId,
+            expenseDate, note)) {
+          System.out.println("出費の追加、成功");
+        } else {
+          System.out.println("出費の追加、失敗");
+        }
+
+        response.sendRedirect("ExpenseListServlet");
+
+      }
 	}
 
 }

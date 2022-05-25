@@ -22,9 +22,9 @@ public class ExpenseDAO {
     
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM expense WHERE user_id = 0 ORDER BY date ASC"; // WHERE user_id = ?
+      String sql = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC"; // WHERE user_id = ?
       st = con.prepareStatement(sql);
-      // st.setInt(1, userId);// テスト的に1を代入してみる
+      st.setInt(1, userId);// テスト的に1を代入してみる
       ResultSet rs = st.executeQuery();
 
       while (rs.next()) {
@@ -78,12 +78,57 @@ public class ExpenseDAO {
       String sql =
           "INSERT INTO expense (user_id,category_id,name,price,date,note) VALUES (?,?,?,?,?,?)";
       st = con.prepareStatement(sql);
-      st.setString(1, userId);// ここのuserIdが0になってしまう件
+      st.setString(1, userId);
       st.setString(2, categoryId);
       st.setString(3, expenseName);
       st.setString(4, price);
       st.setString(5, expenseDate);
       st.setString(6, note);
+
+      if (st.executeUpdate() == 1) {
+        result = true;
+      } else {
+        return result;
+      }
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return result;
+    } finally {
+      if (con != null) {
+        try {
+          con.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    return result;
+  }
+
+  public static boolean updateExpenseSuccess(String expenseId, String userId, String expenseName,
+      String price, String categoryId, String expenseDate, String note) {
+    System.out.println("ExpenseDAO、addExpense内");
+    Connection con = null;
+    PreparedStatement st = null;
+    boolean result = false;
+
+    try {
+      con = DBManager.getConnection();
+      String sql =
+          "UPDATE expense" + "SET category_id=?, name=?, price=?, date=?, note=? WHERE id = ?";
+      st = con.prepareStatement(sql);
+      st.setString(1, userId);
+      st.setString(2, categoryId);
+      st.setString(3, expenseName);
+      st.setString(4, price);
+      st.setString(5, expenseDate);
+      st.setString(6, note);
+      st.setString(7, expenseId);
+
 
       if (st.executeUpdate() == 1) {
         result = true;
