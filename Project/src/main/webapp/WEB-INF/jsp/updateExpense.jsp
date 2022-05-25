@@ -104,34 +104,30 @@
                             <div>
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 <!--requestパラメターから値をゲットして、selectで初期化する方法を見つけなければならない-->
-                                <select id="categoryName" name="category" class="form-control offset-1">
-                                    <option ${categoryId.equals("")?"selected":""} value="">選択する</option>
-                                    <option ${categoryId.equals("1")?"selected":""} value="1">食費</option>
-                                    <option ${categoryId.equals("2")?"selected":""} value="2">娯楽</option>
-                                    <option ${categoryId.equals("3")?"selected":""} value="3">レストラン</option>
-                                    <option ${categoryId.equals("4")?"selected":""} value="4">旅・レジャー</option>
-                                    <option ${categoryId.equals("5")?"selected":""} value="5">交通</option>
-                                    <option ${categoryId.equals("6")?"selected":""} value="6">医療</option>
-                                    <option ${categoryId.equals("7")?"selected":""} value="7">パーソナルケア</option>
-                                    <option ${categoryId.equals("8")?"selected":""} value="8">教育</option>
-                                    <option ${categoryId.equals("9")?"selected":""} value="9">電子機器</option>
-                                    <option ${categoryId.equals("10")?"selected":""} value="10">スマホ・通信</option>
-                                    <option ${categoryId.equals("11")?"selected":""} value="11">住宅</option>
-                                    <option ${categoryId.equals("12")?"selected":""} value="12">水道光熱費</option>
-                                    <option ${categoryId.equals("13")?"selected":""} value="13">衣類</option>
-                                    <option ${categoryId.equals("14")?"selected":""} value="14">その他</option>
+                                <select id="category" name="category" class="form-control offset-1">
+                                    <option ${expense.categoryId.equals("")?"selected":""} value="">選択する</option>
+                                    <option ${expense.categoryId.equals("1")?"selected":""} value="1">食費</option>
+                                    <option ${expense.categoryId.equals("2")?"selected":""} value="2">娯楽</option>
+                                    <option ${expense.categoryId.equals("3")?"selected":""} value="3">レストラン</option>
+                                    <option ${expense.categoryId.equals("4")?"selected":""} value="4">旅・レジャー</option>
+                                    <option ${expense.categoryId.equals("5")?"selected":""} value="5">交通</option>
+                                    <option ${expense.categoryId.equals("6")?"selected":""} value="6">医療</option>
+                                    <option ${expense.categoryId.equals("7")?"selected":""} value="7">パーソナルケア</option>
+                                    <option ${expense.categoryId.equals("8")?"selected":""} value="8">教育</option>
+                                    <option ${expense.categoryId.equals("9")?"selected":""} value="9">電子機器</option>
+                                    <option ${expense.categoryId.equals("10")?"selected":""} value="10">スマホ・通信</option>
+                                    <option ${expense.categoryId.equals("11")?"selected":""} value="11">住宅</option>
+                                    <option ${expense.categoryId.equals("12")?"selected":""} value="12">水道光熱費</option>
+                                    <option ${expense.categoryId.equals("13")?"selected":""} value="13">衣類</option>
+                                    <option ${expense.categoryId.equals("14")?"selected":""} value="14">その他</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="duration" class="control-label col-2">期間</label>
+                            <label for="expense-date" class="control-label col-2">日付</label>
                             <div class="col-lg-4">
-                                <input id="duration1" name="start-date" type="date" class="form-control" value="${expense.startDate}">
-                            </div>
-                            <div class="col-1" style="text-align:center;">~</div>
-                            <div class="col-lg-4">
-                                <input id="duration2" name="end-date" type="date" class="form-control" value="${expense.endDate}">
+                                <input id="expense-date" name="expense-date" type="date" class="form-control" value="${expense.expenseDate}">
                             </div>
                         </div>
 

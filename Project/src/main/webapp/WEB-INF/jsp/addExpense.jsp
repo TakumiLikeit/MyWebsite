@@ -97,12 +97,12 @@
 
                         <!--カテゴリはcheckbox,select,radioなどがあるが、selectが良い-->
                         <div class="form-group row">
-                            <label for="categoryName" class="col-lg-2 col-form-label">カテゴリ</label>
+                            <label for="category" class="col-lg-2 col-form-label">カテゴリ</label>
                             <div>
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 
                                 <!-- ここ変えた、5/25 -->
-                                <select id="categoryName" name="category" class="form-control offset-1">
+                                <select id="category" name="category" class="form-control offset-1">
                                     <option ${categoryId.equals("")?"selected":""} value="">選択する</option>
                                     <option ${categoryId.equals("1")?"selected":""} value="1">食費</option>
                                     <option ${categoryId.equals("2")?"selected":""} value="2">娯楽</option>

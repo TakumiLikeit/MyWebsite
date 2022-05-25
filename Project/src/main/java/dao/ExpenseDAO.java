@@ -64,6 +64,55 @@ public class ExpenseDAO {
     return expenseList;
   }
   
+  // 出費IDから出費情報を取得するリスト
+  public static ExpenseDataBeans findById(int expenseId) {
+    System.out.println("ExpenseDAO、findById内");
+    ExpenseDataBeans edb = new ExpenseDataBeans();
+    Connection con = null;
+    PreparedStatement st = null;
+
+    try {
+      con = DBManager.getConnection();
+      String sql = "SELECT * FROM expense WHERE id = ?";
+      st = con.prepareStatement(sql);
+      st.setInt(1, expenseId);// テスト的に1を代入してみる
+      ResultSet rs = st.executeQuery();
+
+      
+      
+      if (rs.next()) {
+        // int id = rs.getInt("id");
+        edb.setId(expenseId);
+        edb.setUserId(rs.getInt("user_id"));
+        int categoryId = rs.getInt("category_id");
+        edb.setCategoryId(categoryId);
+        edb.setName(rs.getString("name"));
+        edb.setPrice(rs.getInt("price"));
+        edb.setExpenseDate(rs.getDate("date"));
+        edb.setNote(rs.getString("note"));
+        edb.setCreateDate(rs.getTimestamp("create_date"));
+        edb.setUpdateDate(rs.getTimestamp("update_date"));
+        edb.setCategoryName(CategoryDAO.getCategoryName(categoryId));
+      }
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      if (con != null) {
+        try {
+          con.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    return edb;
+  }
+
   // 出費を追加するメソッド（引数は全て、Stringのままで良い）
   // expenseName, price, categoryId, expenseDate, note
   public static boolean addExpenseSuccess(String userId, String expenseName, String price,

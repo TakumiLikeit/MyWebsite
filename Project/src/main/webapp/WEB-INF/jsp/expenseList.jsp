@@ -189,7 +189,7 @@
 		                            <td class="table-h col-3">${expense.categoryName}</td>
 		                            <td>
 		                            	<!-- ここのexpenseにちゃんとidは入っているだろうか -->
-			                            <a href="UpdateExpenseServlet?id=1" class="table-h col-3">${expense.name}</a>
+			                            <a href="UpdateExpenseServlet?id=${expense.id}" class="table-h col-3">${expense.name}</a>
 		                            </td>
 		                            <td class="table-h col-3">${expense.price}</td>
 		                        </tr>

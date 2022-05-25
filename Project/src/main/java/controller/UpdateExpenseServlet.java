@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import beans.ExpenseDataBeans;
 import beans.UserDataBeans;
 import dao.ExpenseDAO;
 import util.ExpenseHelper;
@@ -34,11 +35,17 @@ public class UpdateExpenseServlet extends HttpServlet {
       HttpSession session = request.getSession();
 
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-
       if (udb == null) {
         response.sendRedirect("LoginServlet");
         return;
       }
+
+      // - - - - - - - - - - - - - - - - -
+      int expenseId = Integer.valueOf(request.getParameter("id"));
+      // ExpenseDAO内にfindByIdというメソッドをつくる
+      ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
+      request.setAttribute("expense", edb);
+      // - - - - - - - - - - - - - - - - -
 
 
       // updateList.jspへフォワード
