@@ -47,7 +47,7 @@
                     <label for="loginId" class="col-lg-3 col-form-label">ログインID</label>
                     <div class="col-lg-9">
                         <!--ここのdivにもclassを付与して良い-->
-                        <input id="login-id" type="text" class="form-control" value="${loginId}">
+                        <input id="login-id" name="login-id" type="text" class="form-control" value="${loginId}">
                         <!--入力部分をform-controlで囲む-->
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="form-group row">
                     <label for="password" class="col-lg-3 col-form-label">パスワード</label>
                     <div class="col-lg-9">
-                        <input id="password" type="password" class="form-control" value="${password}">
+                        <input id="password" name="password" type="password" class="form-control" value="${password}">
                     </div>
                 </div>
                 <button class="btn btn-secondary btn-block" type="submit">ログイン</button>

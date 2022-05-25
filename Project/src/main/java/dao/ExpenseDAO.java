@@ -14,7 +14,7 @@ import beans.ExpenseDataBeans;
 public class ExpenseDAO {
 
   // 全ての出費を取得するメソッド
-  public static List<ExpenseDataBeans> findAll() {
+  public static List<ExpenseDataBeans> findAll(int userId) {
     System.out.println("ExpenseDAO、findAll内");
     List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
     Connection con = null;
@@ -22,13 +22,14 @@ public class ExpenseDAO {
     
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM expense ORDER BY date ASC";
+      String sql = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC";
       st = con.prepareStatement(sql);
+      st.setInt(1, 1);// テスト的に1を代入してみる
       ResultSet rs = st.executeQuery();
 
       while (rs.next()) {
         int id = rs.getInt("id");
-        int userId = rs.getInt("user_id");
+        // int userId = rs.getInt("user_id");
         int categoryId = rs.getInt("category_id");
         String name = rs.getString("name");
         int price = rs.getInt("price");

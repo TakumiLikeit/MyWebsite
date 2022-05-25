@@ -183,7 +183,7 @@
                 	
                     <tbody>
                     	<c:forEach  var="expense" items="${expenseList}">
-                    		<c:if test="${expense.userId}==${userInfo.id+1}">
+                    		<!--<c:if test="${expense.userId}==${userInfo.id}">-->
 		                        <tr>
 		                            <td class="table-h col-3"><fmt:formatDate value="${expense.expenseDate}" pattern="yyyy年MM月dd日" /></td>
 		                            <!-- categoryNameをbeansに追加する必要あり -->
@@ -193,7 +193,7 @@
 		                            </td>
 		                            <td class="table-h col-3">${expense.price}</td>
 		                        </tr>
-	                        </c:if>
+	                        <!--</c:if>-->
 						</c:forEach>
 
                         <tr>

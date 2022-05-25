@@ -11,10 +11,9 @@ public class UserDAO {
 
 
   public static UserDataBeans getUser(String loginId, String password) throws SQLException {
-    UserDataBeans udb = new UserDataBeans();
+    UserDataBeans udb = null;
     Connection con = null;
     PreparedStatement st = null;
-    int id = 100;
 
     try {
       con = DBManager.getConnection();
@@ -25,15 +24,14 @@ public class UserDAO {
       ResultSet rs = st.executeQuery();
 
       if (rs.next()) {
-        // udb.setId(rs.getInt("id"));
-        id = rs.getInt("id");
-        udb.setId(id);
+        udb = new UserDataBeans();
 
+        udb.setId(rs.getInt("id"));
         udb.setLoginId(rs.getString("login_id"));
         udb.setName(rs.getString("name"));
         udb.setPassword(rs.getString("password"));
         udb.setCreateDate(rs.getTimestamp("create_date"));
-        udb.setUpdateDate(rs.getTimestamp("update_date_date"));
+        udb.setUpdateDate(rs.getTimestamp("update_date"));
       }
 
       st.close();
@@ -52,7 +50,6 @@ public class UserDAO {
       }
     }
 
-    System.out.println("UserDAO内、id : " + id);
     System.out.println("Searching UserDataBeans by userId and password has been completed.");
     return udb;
   }

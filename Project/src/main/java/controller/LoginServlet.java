@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 
       try {
 
-        udb = UserDAO.getUser(loginId, password);
+        udb = UserDAO.getUser(loginId, password); // ここでnullじゃないっぽいのだよな
 
         /** テーブルに該当のデータが見つからなかった場合 * */
         if (udb == null) {
@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 
           // login.jspへフォワード
           request.getRequestDispatcher(ExpenseHelper.LOGIN_PAGE).forward(request, response);
-          // return;
+          return;
         }
 
       } catch (Exception e) {

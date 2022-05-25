@@ -41,8 +41,11 @@ public class ExpenseListServlet extends HttpServlet {
         return;
       }
 
-      // 全ての出費を取得
-      List<ExpenseDataBeans> expenseList = ExpenseDAO.findAll();
+      int userId = udb.getId();
+      System.out.println("ExpenseListServlet内、doGet、userId: " + userId);
+
+      // 今ログインしているユーザーのIDをもとに、全ての出費を取得
+      List<ExpenseDataBeans> expenseList = ExpenseDAO.findAll(userId);
       request.setAttribute("expenseList", expenseList);
 
       // 合計金額の計算（for_loop,他のやり方がありそう）
