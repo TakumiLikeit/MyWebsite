@@ -52,7 +52,7 @@
                     <div class="form-inline">
                         <!--リスト、classはnav-item-->
                         <li class="nav-item mr-2">
-                            <span class="navbar-text">${userInfo.name} さん</span>
+                            <span class="navbar-text">${userInfo.name} ${userInfo.id} さん</span>
                         </li>
 
                         <li class="nav-item">
@@ -70,7 +70,9 @@
     <!--headerの下に隙間を作りたかった-->
 
     <div class="container-fluid">
-        <div class="alert alert-danger" role="alert">該当する出費はありません。</div>
+        <c:if test="${errMsg!=null}">
+        	<div class="alert alert-danger" role="alert">${errMsg} 該当する出費はありません。</div>
+		</c:if>
 
         <!--my-1で上下にマージン追加-->
         <div class="offset-10 my-2">
@@ -181,16 +183,17 @@
                 	
                     <tbody>
                     	<c:forEach  var="expense" items="${expenseList}">
-                    
-	                        <tr>
-	                            <td class="table-h col-3"><fmt:formatDate value="${expense.expenseDate}" pattern="yyyy年MM月dd日" /></td>
-	                            <!-- categoryNameをbeansに追加する必要あり -->
-	                            <td class="table-h col-3">${expense.categoryName}</td>
-	                            <td>
-		                            <a href="UpdateExpenseServlet?id=${expense.id}" class="table-h col-3">${expense.name}</a>
-	                            </td>
-	                            <td class="table-h col-3">${expense.price}</td>
-	                        </tr>
+                    		<c:if test="${expense.userId}==${userInfo.id+1}">
+		                        <tr>
+		                            <td class="table-h col-3"><fmt:formatDate value="${expense.expenseDate}" pattern="yyyy年MM月dd日" /></td>
+		                            <!-- categoryNameをbeansに追加する必要あり -->
+		                            <td class="table-h col-3">${expense.categoryName}</td>
+		                            <td>
+			                            <a href="UpdateExpenseServlet?id=${expense.id}" class="table-h col-3">${expense.name}</a>
+		                            </td>
+		                            <td class="table-h col-3">${expense.price}</td>
+		                        </tr>
+	                        </c:if>
 						</c:forEach>
 
                         <tr>

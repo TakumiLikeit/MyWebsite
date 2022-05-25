@@ -132,7 +132,8 @@
                         <div class="form-group row">
                             <label for="note" class="col-lg-2 col-form-label">メモ</label>
                             <div class="col-lg-9">
-                                <textarea id="note" name="note" class="form-control" rows="4" cols="50" value="${note}"></textarea>
+                            	<!-- textareaないの値の初期化は、value=ではなく、間に挟んでしまうのだと思う -->
+                                <textarea id="note" name="note" class="form-control" rows="4" cols="50">${note}</textarea>
                             </div>
                         </div>
 

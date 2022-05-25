@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import beans.UserDataBeans;
+import dao.ExpenseDAO;
 import util.ExpenseHelper;
 
 /**
@@ -71,19 +72,31 @@ public class AddExpenseServlet extends HttpServlet {
         request.setAttribute("note", note);
 
         request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
-        return;
+        // return;
       } else {
         System.out.println("AddExpenseServlet、doPost内、isEmptyでない場合");
 
+        HttpSession session = request.getSession();
+        UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
+        if (udb == null) {
+          System.out.println("udbはnullです");
+        }
+        {
+          System.out.println("udbはnullじゃないです");
+        }
+        String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い
+
+        System.out.println("userId: " + userId);
 
 
-        // ExpenseDAO内に、出費を追加するメソッドを追加する
+        if (ExpenseDAO.addExpenseSuccess(userId, expenseName, price, categoryId, expenseDate, note)) {
+          System.out.println("出費の追加、成功");
+        } else {
+          System.out.println("出費の追加、失敗");
+        }
 
-
-
+        response.sendRedirect("ExpenseListServlet");
       }
-
-      response.sendRedirect("ExpenseListServlet");
 
 	}
 

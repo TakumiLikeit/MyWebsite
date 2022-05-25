@@ -84,6 +84,7 @@ public class LoginServlet extends HttpServlet {
       /** テーブルに該当のデータが見つかった場合 * */
       // セッションにユーザの情報をセット
       HttpSession session = request.getSession();
+      session.removeAttribute("userInfo");// 前のデータを削除したい
       session.setAttribute("userInfo", udb);
 
       // 出費一覧のサーブレットにリダイレクト

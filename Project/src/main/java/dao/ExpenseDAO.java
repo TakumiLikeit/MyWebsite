@@ -63,25 +63,38 @@ public class ExpenseDAO {
     return expenseList;
   }
   
-  public static int addExpense() {
+  // 出費を追加するメソッド（引数は全て、Stringのままで良い）
+  // expenseName, price, categoryId, expenseDate, note
+  public static boolean addExpenseSuccess(String userId, String expenseName, String price,
+      String categoryId, String expenseDate, String note) {
     System.out.println("ExpenseDAO、addExpense内");
     Connection con = null;
     PreparedStatement st = null;
+    boolean result = false;
 
     try {
       con = DBManager.getConnection();
-      String sql = "INSERT INTO expense (category_id,name,price,date,note) VALUES (?,?,?,?,?)";
+      String sql =
+          "INSERT INTO expense (user_id,category_id,name,price,date,note) VALUES (?,?,?,?,?,?)";
       st = con.prepareStatement(sql);
-      int result = st.executeUpdate();
+      st.setString(1, userId);// ここのuserIdが0になってしまう件
+      st.setString(2, categoryId);
+      st.setString(3, expenseName);
+      st.setString(4, price);
+      st.setString(5, expenseDate);
+      st.setString(6, note);
 
-
-
+      if (st.executeUpdate() == 1) {
+        result = true;
+      } else {
+        return result;
+      }
 
       st.close();
 
     } catch (SQLException e) {
       e.printStackTrace();
-      return 0;
+      return result;
     } finally {
       if (con != null) {
         try {
@@ -92,7 +105,7 @@ public class ExpenseDAO {
       }
     }
 
-    return 0;
+    return result;
   }
 
 }

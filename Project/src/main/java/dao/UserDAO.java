@@ -14,17 +14,21 @@ public class UserDAO {
     UserDataBeans udb = new UserDataBeans();
     Connection con = null;
     PreparedStatement st = null;
+    int id = 100;
 
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM user WHERE id = ? AND password = ?";
+      String sql = "SELECT * FROM user WHERE login_id = ? AND password = ?";
       st = con.prepareStatement(sql);
       st.setString(1, loginId);
       st.setString(2, password);
       ResultSet rs = st.executeQuery();
 
       if (rs.next()) {
-        udb.setId(rs.getInt("id"));
+        // udb.setId(rs.getInt("id"));
+        id = rs.getInt("id");
+        udb.setId(id);
+
         udb.setLoginId(rs.getString("login_id"));
         udb.setName(rs.getString("name"));
         udb.setPassword(rs.getString("password"));
@@ -48,6 +52,7 @@ public class UserDAO {
       }
     }
 
+    System.out.println("UserDAO内、id : " + id);
     System.out.println("Searching UserDataBeans by userId and password has been completed.");
     return udb;
   }
