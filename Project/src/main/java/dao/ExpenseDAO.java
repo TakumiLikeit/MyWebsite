@@ -22,9 +22,9 @@ public class ExpenseDAO {
     
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC";
+      String sql = "SELECT * FROM expense ORDER BY date ASC"; // WHERE user_id = ?
       st = con.prepareStatement(sql);
-      st.setInt(1, 1);// テスト的に1を代入してみる
+      // st.setInt(1, userId);// テスト的に1を代入してみる
       ResultSet rs = st.executeQuery();
 
       while (rs.next()) {
