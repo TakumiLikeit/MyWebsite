@@ -53,28 +53,33 @@ public class AddExpenseServlet extends HttpServlet {
       String expenseName = request.getParameter("expense-name");
       // int price = Integer.valueOf(request.getParameter("price"));
       String price = request.getParameter("price");
-      String categoryName = request.getParameter("category");
+      String categoryId = request.getParameter("category");
       // Date expenseDate = Date.valueOf(request.getParameter("expense-date"));
       String expenseDate = request.getParameter("expense-date");
       String note = request.getParameter("note");
 
       // 例外処理。（現段階では、空欄がある場合のみ）
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
-      if (ExpenseHelper.isEmpty(expenseName, price, categoryName, expenseDate)) {
-        request.setAttribute("errMsg", "空欄があります");
+      if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
+        System.out.println("AddExpenseServlet、doPost内、isEmptyの場合");
+        request.setAttribute("errMsg", "入力必須項目に空欄があります");
 
         request.setAttribute("expenseName", expenseName);
         request.setAttribute("price", price);
-        request.setAttribute("categoryName", categoryName);
+        request.setAttribute("categoryId", categoryId);// ここ変える、5/25
         request.setAttribute("expenseDate", expenseDate);
         request.setAttribute("note", note);
 
         request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
         return;
       } else {
+        System.out.println("AddExpenseServlet、doPost内、isEmptyでない場合");
 
-        // ExpenseDAO内に、出費を追加するメソッドを追加する（追加したら、ExpenseListServletへリダイレクトする）
-        // ここわかんない！（selectからデータを取得する関係）
+
+
+        // ExpenseDAO内に、出費を追加するメソッドを追加する
+
+
 
       }
 
