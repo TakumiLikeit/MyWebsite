@@ -82,8 +82,6 @@ public class AddExpenseServlet extends HttpServlet {
         }
         String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い
 
-        System.out.println("userId: " + userId);
-
 
         if (ExpenseDAO.addExpenseSuccess(userId, expenseName, price, categoryId, expenseDate, note)) {
           System.out.println("出費の追加、成功");
