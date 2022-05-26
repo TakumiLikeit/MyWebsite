@@ -53,12 +53,12 @@ public class ExpenseHelper {
     return "password";
   }
 
-  // matchesによる、数字かどうかの判断
+  // String.matchesによる、数字かどうかを判別するメソッド
   public static boolean isNumeric(String str) {
     return str.matches("[+-]?\\d*(\\.\\d+)?");
   }
 
-  //
+  // 0かどうかを判別するメソッド（0未満の値はisNumericで処理されるよう）
   public static boolean isNegative(String str) {
 
     // if (str == null || isNumeric(str)) {
@@ -78,6 +78,7 @@ public class ExpenseHelper {
 
   }
 
+  // + - のサインだけで入力されたかどうかを判別するメソッド
   public static boolean isOnlySign(String str) {
     if (str.equals("+") || str.equals("-")) {
       return true;
