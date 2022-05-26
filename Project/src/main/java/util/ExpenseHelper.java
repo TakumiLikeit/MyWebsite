@@ -1,5 +1,11 @@
 package util;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
+
 public class ExpenseHelper {
   // ログインページ
   public static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
@@ -25,6 +31,26 @@ public class ExpenseHelper {
     } else {
       return false;
     }
+  }
+
+  // MD5、アルゴリズムによるパスワード暗号化
+  public static String encodePassword(String password) {
+
+    Charset charset = StandardCharsets.UTF_8; // ハッシュ生成前にバイト配列に置き換える際のCharset
+    String algorithm = "MD5"; // ハッシュ関数の種類
+
+    try {
+      byte[] bytes = MessageDigest.getInstance(algorithm).digest(password.getBytes(charset));
+      String encodeStr = DatatypeConverter.printHexBinary(bytes);
+
+      System.out.println(encodeStr);
+      return encodeStr;
+
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+
+    return "password";
   }
 
 }

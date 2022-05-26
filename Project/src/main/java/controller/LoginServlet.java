@@ -54,6 +54,7 @@ public class LoginServlet extends HttpServlet {
       String password = request.getParameter("password");
 
       // パスワードの暗号化
+      // String encodedPassword = ExpenseHelper.encodePassword(password);
 
       UserDataBeans udb = null;
 
