@@ -168,15 +168,14 @@ public class ExpenseDAO {
     try {
       con = DBManager.getConnection();
       String sql =
-          "UPDATE expense" + "SET category_id=?, name=?, price=?, date=?, note=? WHERE id = ?";
+          "UPDATE expense " + "SET category_id=?, name=?, price=?, date=?, note=? WHERE id = ?";
       st = con.prepareStatement(sql);
-      st.setString(1, userId);
-      st.setString(2, categoryId);
-      st.setString(3, expenseName);
-      st.setString(4, price);
-      st.setString(5, expenseDate);
-      st.setString(6, note);
-      st.setString(7, expenseId);
+      st.setString(1, categoryId);
+      st.setString(2, expenseName);
+      st.setString(3, price);
+      st.setString(4, expenseDate);
+      st.setString(5, note);
+      st.setString(6, expenseId);
 
 
       if (st.executeUpdate() == 1) {

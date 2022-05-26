@@ -71,6 +71,12 @@ public class UpdateExpenseServlet extends HttpServlet {
       String expenseDate = request.getParameter("expense-date");
       String note = request.getParameter("note");
 
+      System.out.println("expenseName: " + expenseName);
+      System.out.println("price: " + price);
+      System.out.println("categoryId: " + categoryId);
+      System.out.println("expenseDate: " + expenseDate);
+      System.out.println("note: " + note);
+
       // 例外処理。（現段階では、空欄がある場合のみ）
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
       if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
@@ -84,7 +90,7 @@ public class UpdateExpenseServlet extends HttpServlet {
         request.setAttribute("expenseDate", expenseDate);
         request.setAttribute("note", note);
 
-        request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
+        request.getRequestDispatcher(ExpenseHelper.EXPENSE_UPDATE_PAGE).forward(request, response);
         // return;
       } else {
         System.out.println("AddExpenseServlet、doPost内、isEmptyでない場合");
@@ -100,14 +106,18 @@ public class UpdateExpenseServlet extends HttpServlet {
 
         System.out.println("あいうえお");
 
-        /*
-         * // 変更中 int id = udb.getId(); String userId = String.valueOf(id);//
-         * ここの値がnullで問題が生じている可能性が高い // //valueOfの中がString型じゃない、int型じゃない可能性。型をチェックする必要がある
-         * 
-         * if (ExpenseDAO.updateExpenseSuccess(expenseId, userId, expenseName, price, categoryId,
-         * expenseDate, note)) { System.out.println("出費の追加、成功"); } else {
-         * System.out.println("出費の追加、失敗"); }
-         */
+
+        // 変更中 int id = udb.getId();
+        String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い //
+                                                    // //valueOfの中がString型じゃない、int型じゃない可能性。型をチェックする必要がある
+
+        if (ExpenseDAO.updateExpenseSuccess(expenseId, userId, expenseName, price, categoryId,
+            expenseDate, note)) {
+          System.out.println("出費の追加、成功");
+        } else {
+          System.out.println("出費の追加、失敗");
+        }
+
 
         response.sendRedirect("ExpenseListServlet");
 
