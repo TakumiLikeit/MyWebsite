@@ -42,7 +42,7 @@
                             <label for="exspense-name" class="col-lg-2">出費名:</label>
                             <div class="col-lg-3">
                                 <!--ここのdivにもclassを付与して良い-->
-                                <input type="hidden" id="expense-name" name="expense-name" value="りんご">
+                                <input type="hidden" id="expense-name" name="expense-name" value="${expense.name}">
                                 <p>りんご</p>
                                 <!--入力部分をform-controlで囲む-->
                             </div>
@@ -51,7 +51,7 @@
                         <div class="row">
                             <label for="price" class="col-lg-2">値段:</label>
                             <div class="col-lg-3">
-                                <input type="hidden" id="price" name="price" value="120">
+                                <input type="hidden" id="price" name="price" value="${expense.price}">
                                 <p>120</p>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                         <div class="row">
                             <label for="category" class="col-lg-2">カテゴリ:</label>
                             <div class="col-lg-3">
-                                <input type="hidden" id="food" name="food" value="食費">
+                                <input type="hidden" id="food" name="food" value="${expense.categoryName}">
                                 <p>食費</p>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="row">
                             <label for="duration" class="col-lg-2">日付:</label>
                             <div class="col-lg-3">
-                                <input type="hidden" id="date" name="date" class="form-control" value="2022-04-01">
+                                <input type="hidden" id="date" name="date" class="form-control" value="${expense.expenseDate}">
                                 <p>2022年4月1日</p>
                             </div>
                         </div>
@@ -80,7 +80,8 @@
                     </div>
                     <div class="col-3">
                         <form action="DeleteExpenseServlet" method="post">
-                                <input type="button" id="yes" name="yes" value="はい" class="btn btn-danger  btn-block">
+                        		<input type="hidden" id="id" name="id" value="${expense.id}">
+                                <input type="submit" id="yes" name="yes" value="はい" class="btn btn-danger  btn-block">
                         </form>
                     </div>
                 </div>

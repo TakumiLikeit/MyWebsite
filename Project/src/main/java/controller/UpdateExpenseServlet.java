@@ -71,11 +71,11 @@ public class UpdateExpenseServlet extends HttpServlet {
       String expenseDate = request.getParameter("expense-date");
       String note = request.getParameter("note");
 
-      System.out.println("expenseName: " + expenseName);
-      System.out.println("price: " + price);
-      System.out.println("categoryId: " + categoryId);
-      System.out.println("expenseDate: " + expenseDate);
-      System.out.println("note: " + note);
+      /*
+       * System.out.println("expenseName: " + expenseName); System.out.println("price: " + price);
+       * System.out.println("categoryId: " + categoryId); System.out.println("expenseDate: " +
+       * expenseDate); System.out.println("note: " + note);
+       */
 
       // 例外処理。（現段階では、空欄がある場合のみ）
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成

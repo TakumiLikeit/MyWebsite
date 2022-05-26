@@ -47,6 +47,13 @@ public class DeleteExpenseServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      request.setCharacterEncoding("UTF-8"); // 文字化け防止
+
+
+      String expenseId = request.getParameter("id");
+
+      // request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);
+      response.sendRedirect("ExpenseListServlet");
 
 	}
 
