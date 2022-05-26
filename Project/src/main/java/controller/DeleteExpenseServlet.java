@@ -64,6 +64,10 @@ public class DeleteExpenseServlet extends HttpServlet {
 
       String expenseId = request.getParameter("id");
 
+      // ExpenseDAOに、出費を削除するメソッドを作成
+      ExpenseDAO.deleteExpense(expenseId);
+
+
       // request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);
       response.sendRedirect("ExpenseListServlet");
 

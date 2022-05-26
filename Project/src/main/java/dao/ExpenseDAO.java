@@ -160,7 +160,7 @@ public class ExpenseDAO {
 
   public static boolean updateExpenseSuccess(String expenseId, String userId, String expenseName,
       String price, String categoryId, String expenseDate, String note) {
-    System.out.println("ExpenseDAO、addExpense内");
+    System.out.println("ExpenseDAO、updateExpense内");
     Connection con = null;
     PreparedStatement st = null;
     boolean result = false;
@@ -202,4 +202,41 @@ public class ExpenseDAO {
     return result;
   }
 
+
+  public static void deleteExpense(String expenseId) {
+    System.out.println("ExpenseDAO、deleteExpense内");
+    Connection con = null;
+    PreparedStatement st = null;
+
+    try {
+      con = DBManager.getConnection();
+      String sql =
+          "DELETE FROM expense WHERE id = ?";
+      st = con.prepareStatement(sql);
+      st.setString(1, expenseId);
+
+
+      if (st.executeUpdate() == 1) {
+        System.out.println("削除成功");
+      } else {
+        System.out.println("削除失敗");
+      }
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      if (con != null) {
+        try {
+          con.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+  }
+
 }
+

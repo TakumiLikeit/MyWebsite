@@ -11,9 +11,8 @@ public class CategoryDAO {
 
 
   // カテゴリー名を返す、メソッドを作成
-  public static String getCategoryName(int id) {
-    System.out.println("CategoryDAO、getCategoryName内");
-    String categoryName = "あ";
+  public static String getCategoryName(int categoryId) {
+    String categoryName = null;
     Connection con = null;
     PreparedStatement st = null;
 
@@ -21,14 +20,14 @@ public class CategoryDAO {
       con = DBManager.getConnection();
       String sql = "SELECT * FROM category WHERE id = ?";
       st = con.prepareStatement(sql);
-      st.setInt(1, id); // テストでidの代わりに1を代入
+      st.setInt(1, categoryId); // テストでidの代わりに1を代入
       ResultSet rs = st.executeQuery();
 
 
       if (rs.next()) { // rs.next()を指定してあげないと読み込めない。
         categoryName = rs.getString("name");
       } else {
-        categoryName = "い";
+        categoryName = "不明";
       }
 
       st.close();
