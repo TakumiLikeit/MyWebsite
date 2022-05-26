@@ -41,13 +41,9 @@ public class DeleteExpenseServlet extends HttpServlet {
         return;
       }
 
-      // String expenseId = (String) request.getAttribute("id");
-
-      // ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
-      // request.setAttribute("expense", edb);
       
       int expenseId = Integer.valueOf(request.getParameter("id"));
-      System.out.println("expenseId" + expenseId);
+      // System.out.println("expenseId" + expenseId);
       ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
       request.setAttribute("expense", edb);
 

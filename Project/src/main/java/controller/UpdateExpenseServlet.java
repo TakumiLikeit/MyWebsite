@@ -83,7 +83,7 @@ public class UpdateExpenseServlet extends HttpServlet {
        * expenseDate); System.out.println("note: " + note);
        */
 
-      // 例外処理。（現段階では、空欄がある場合のみ）
+      // 例外処理
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
         boolean existsErr = false;
         if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
@@ -114,11 +114,7 @@ public class UpdateExpenseServlet extends HttpServlet {
         HttpSession session = request.getSession();
         UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
-
-
-        // 変更中 int id = udb.getId();
-        String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い //
-                                                    // //valueOfの中がString型じゃない、int型じゃない可能性。型をチェックする必要がある
+        String userId = String.valueOf(udb.getId());
 
         if (ExpenseDAO.updateExpenseSuccess(expenseId, userId, expenseName, price, categoryId,
             expenseDate, note)) {

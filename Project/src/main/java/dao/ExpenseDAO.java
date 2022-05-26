@@ -123,13 +123,13 @@ public class ExpenseDAO {
     
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM expense WHERE user_id = ?";
-      String sql2 = " ORDER BY date ASC";
+      String sqlSelect = "SELECT * FROM expense WHERE user_id = ?";
+      String sqlOrder = " ORDER BY date ASC";
 
       List<String> parameterList = new ArrayList<String>();
       StringBuilder sb = new StringBuilder();
 
-      sb.append(sql);
+      sb.append(sqlSelect);
       if (!expenseName.equals("")) {
         sb.append(" AND name LIKE CONCAT('%',?,'%')");
         parameterList.add(expenseName);
@@ -150,7 +150,7 @@ public class ExpenseDAO {
        * }
        */
 
-      sb.append(sql2);
+      sb.append(sqlOrder);
 
 
       st = con.prepareStatement(sb.toString());

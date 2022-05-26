@@ -89,7 +89,7 @@ public class AddExpenseServlet extends HttpServlet {
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
-      String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い
+      String userId = String.valueOf(udb.getId());
 
 
       if (ExpenseDAO.addExpenseSuccess(userId, expenseName, price, categoryId, expenseDate, note)) {

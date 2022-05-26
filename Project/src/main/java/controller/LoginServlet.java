@@ -65,7 +65,6 @@ public class LoginServlet extends HttpServlet {
 
         /** テーブルに該当のデータが見つからなかった場合 * */
         if (udb == null) {
-          System.out.println("doPost内、該当のユーザがいません");
           request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
           request.setAttribute("loginId", loginId);
           request.setAttribute("password", password);// ここのパスワードはそのままでOK
@@ -81,12 +80,10 @@ public class LoginServlet extends HttpServlet {
         // response.sendRedirect("Error");
       }
 
-      System.out.println("doPost内、該当のデータを発見");
-
       /** テーブルに該当のデータが見つかった場合 * */
       // セッションにユーザの情報をセット
       HttpSession session = request.getSession();
-      session.removeAttribute("userInfo");// 前のデータを削除したい
+      session.removeAttribute("userInfo");// 前のデータを削除したい（念の為）
       session.setAttribute("userInfo", udb);
 
       // 出費一覧のサーブレットにリダイレクト
