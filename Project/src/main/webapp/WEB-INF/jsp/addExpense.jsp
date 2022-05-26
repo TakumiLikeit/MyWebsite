@@ -36,15 +36,13 @@
     <!--mb-3でマージンを作成する-->
     <header class="mb-3">
         <!--headerの中に埋め込むイメージ-->
-        <nav class="navbar navbar-dark bg-dark text-light">
-            <!--navってなんだ-->
-            <!--navをいれるとちょっと下がる-->
-            <div class="container-fluid">
-                <div class="col-6 offset-1">
-                    <h4>出費登録画面</h4>
-                </div>
-            </div>
-        </nav>
+        <div class="container-fluid">
+            <nav class="navbar navbar-dark bg-dark text-light">                
+                    <div class="offset-1">
+                        <h4>出費登録画面</h4>
+                    </div>
+            </nav>
+        </div>
     </header>
 
     <!--<div class="space-h"></div>-->

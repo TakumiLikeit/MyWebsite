@@ -25,7 +25,9 @@
     <header class="mb-3">
         <div class="container-fluid">
             <nav class="navbar navbar-dark bg-dark text-light">
-                <h4>出費削除画面</h4>
+                <div class="offset-1">
+                    <h4>出費削除画面</h4>
+                </div>
             </nav>
         </div>
     </header>
