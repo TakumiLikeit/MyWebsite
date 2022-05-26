@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import beans.ExpenseDataBeans;
 import beans.UserDataBeans;
+import dao.ExpenseDAO;
 import util.ExpenseHelper;
 
 /**
@@ -38,6 +40,16 @@ public class DeleteExpenseServlet extends HttpServlet {
         response.sendRedirect("LoginServlet");
         return;
       }
+
+      // String expenseId = (String) request.getAttribute("id");
+
+      // ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
+      // request.setAttribute("expense", edb);
+      
+      int expenseId = Integer.valueOf(request.getParameter("id"));
+      System.out.println("expenseId" + expenseId);
+      ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
+      request.setAttribute("expense", edb);
 
       // deleteExpense.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.EXPENSE_DELETE_PAGE).forward(request, response);

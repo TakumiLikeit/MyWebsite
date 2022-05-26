@@ -139,7 +139,9 @@
                         </div>
 
                         <button class="btn btn-primary offset-7 col-2" type="submit">更新</button>
-                        <a href="DeleteExpenseServlet" class="btn btn-danger col-2">削除する</a>
+                        <!-- formをまた別で作成する必要がある可能性があるだろうか、いや、ないはず -->
+                        <!-- input hiddenを使う必要もあるだろうか、expenseList.jspをチェック -->
+                        <a href="DeleteExpenseServlet?id=${expense.id}" class="btn btn-danger col-2">削除する</a>
                     </form>
                 </div>
             </div>

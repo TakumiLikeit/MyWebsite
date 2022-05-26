@@ -43,7 +43,7 @@
                             <div class="col-lg-3">
                                 <!--ここのdivにもclassを付与して良い-->
                                 <input type="hidden" id="expense-name" name="expense-name" value="${expense.name}">
-                                <p>りんご</p>
+                                <p>${expense.name}</p>
                                 <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <label for="price" class="col-lg-2">値段:</label>
                             <div class="col-lg-3">
                                 <input type="hidden" id="price" name="price" value="${expense.price}">
-                                <p>120</p>
+                                <p>${expense.price}</p>
                             </div>
                         </div>
 
@@ -60,7 +60,7 @@
                             <label for="category" class="col-lg-2">カテゴリ:</label>
                             <div class="col-lg-3">
                                 <input type="hidden" id="food" name="food" value="${expense.categoryName}">
-                                <p>食費</p>
+                                <p>${expense.categoryName}</p>
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@
                             <label for="duration" class="col-lg-2">日付:</label>
                             <div class="col-lg-3">
                                 <input type="hidden" id="date" name="date" class="form-control" value="${expense.expenseDate}">
-                                <p>2022年4月1日</p>
+                                <p>${expense.expenseDate}</p>
                             </div>
                         </div>
                     </form>
