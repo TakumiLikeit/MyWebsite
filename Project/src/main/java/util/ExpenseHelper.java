@@ -53,4 +53,39 @@ public class ExpenseHelper {
     return "password";
   }
 
+  // matchesによる、数字かどうかの判断
+  public static boolean isNumeric(String str) {
+    return str.matches("[+-]?\\d*(\\.\\d+)?");
+  }
+
+  //
+  public static boolean isNegative(String str) {
+
+    // if (str == null || isNumeric(str)) {
+    // return false;
+    // }
+
+    if (str.equals("")) {
+      return false;
+    } else {
+      int value = Integer.valueOf(str);
+      if (value <= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+  }
+
+  public static boolean isOnlySign(String str) {
+    if (str.equals("+") || str.equals("-")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+
 }

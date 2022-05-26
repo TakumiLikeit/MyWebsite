@@ -54,6 +54,9 @@
     	<c:if test="${errMsg!=null}">
         	<div class="alert alert-danger" role="alert">${errMsg}</div>
 		</c:if>
+    	<c:if test="${errMsgPrice!=null}">
+        	<div class="alert alert-danger" role="alert">${errMsgPrice}</div>
+		</c:if>
         <div class="card mb-1">
             <!--cardはテーブルのようなボックスを作り出す-->
             <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
@@ -71,7 +74,7 @@
                     <form action="UpdateExpenseServlet" method="post">
 
 						<!-- idをサーブレットに返さなければいけない -->
-						<input id="id" name="id" type="hidden" value="${expense.id}">
+						<input id="id" name="id" type="hidden" value="${expense.id!=null?expense.id:expenseId}">
 						
                         <div class="form-group row">
                             <!--入力部品をform-groupで囲み-->
@@ -80,7 +83,7 @@
                             <label for="exspense-name" class="col-lg-2 col-form-label">出費名</label>
                             <div class="col-lg-9">
                                 <!--ここのdivにもclassを付与して良い-->
-                                <input id="expense-name" name="expense-name" type="text" class="form-control" value="${expense.name}">
+                                <input id="expense-name" name="expense-name" type="text" class="form-control" value="${expense.name!=null?expense.name:expenseName}">
                                 <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
@@ -93,7 +96,8 @@
                             <label for="price" class="col-lg-2 col-form-label">値段</label>
                             <div class="col-lg-9">
                                 <!--ここのdivにもclassを付与して良い-->
-                                <input id="price" name="price" type="text" class="form-control" value="${expense.price}">
+                                <input id="price" name="price" type="text" class="form-control" value="${expense.price!=null?expense.price:price}">
+                                <!-- value="${expense.price!=null?expense.price:price}" -->
                                 <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
@@ -105,21 +109,21 @@
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 <!--requestパラメターから値をゲットして、selectで初期化する方法を見つけなければならない-->
                                 <select id="category" name="category" class="form-control offset-1">
-                                    <option ${expense.categoryId==0?"selected":""} value="">選択する</option>
-                                    <option ${expense.categoryId==1?"selected":""} value="1">食費</option>
-                                    <option ${expense.categoryId==2?"selected":""} value="2">娯楽</option>
-                                    <option ${expense.categoryId==3?"selected":""} value="3">レストラン</option>
-                                    <option ${expense.categoryId==4?"selected":""} value="4">旅・レジャー</option>
-                                    <option ${expense.categoryId==5?"selected":""} value="5">交通</option>
-                                    <option ${expense.categoryId==6?"selected":""} value="6">医療</option>
-                                    <option ${expense.categoryId==7?"selected":""} value="7">パーソナルケア</option>
-                                    <option ${expense.categoryId==8?"selected":""} value="8">教育</option>
-                                    <option ${expense.categoryId==9?"selected":""} value="9">電子機器</option>
-                                    <option ${expense.categoryId==10?"selected":""} value="10">スマホ・通信</option>
-                                    <option ${expense.categoryId==11?"selected":""} value="11">住宅</option>
-                                    <option ${expense.categoryId==12?"selected":""} value="12">水道光熱費</option>
-                                    <option ${expense.categoryId==13?"selected":""} value="13">衣類</option>
-                                    <option ${expense.categoryId==14?"selected":""} value="14">その他</option>
+                                    <option ${expense.categoryId==0||categoryId.equals("")?"selected":""} value="">選択する</option>
+                                    <option ${expense.categoryId==1||categoryId.equals("1")?"selected":""} value="1">食費</option>
+                                    <option ${expense.categoryId==2||categoryId.equals("2")?"selected":""} value="2">娯楽</option>
+                                    <option ${expense.categoryId==3||categoryId.equals("3")?"selected":""} value="3">レストラン</option>
+                                    <option ${expense.categoryId==4||categoryId.equals("4")?"selected":""} value="4">旅・レジャー</option>
+                                    <option ${expense.categoryId==5||categoryId.equals("5")?"selected":""} value="5">交通</option>
+                                    <option ${expense.categoryId==6||categoryId.equals("6")?"selected":""} value="6">医療</option>
+                                    <option ${expense.categoryId==7||categoryId.equals("7")?"selected":""} value="7">パーソナルケア</option>
+                                    <option ${expense.categoryId==8||categoryId.equals("8")?"selected":""} value="8">教育</option>
+                                    <option ${expense.categoryId==9||categoryId.equals("9")?"selected":""} value="9">電子機器</option>
+                                    <option ${expense.categoryId==10||categoryId.equals("10")?"selected":""} value="10">スマホ・通信</option>
+                                    <option ${expense.categoryId==11||categoryId.equals("11")?"selected":""} value="11">住宅</option>
+                                    <option ${expense.categoryId==12||categoryId.equals("12")?"selected":""} value="12">水道光熱費</option>
+                                    <option ${expense.categoryId==13||categoryId.equals("13")?"selected":""} value="13">衣類</option>
+                                    <option ${expense.categoryId==14||categoryId.equals("14")?"selected":""} value="14">その他</option>
                                 </select>
                             </div>
                         </div>
@@ -127,14 +131,14 @@
                         <div class="form-group row">
                             <label for="expense-date" class="control-label col-2">日付</label>
                             <div class="col-lg-4">
-                                <input id="expense-date" name="expense-date" type="date" class="form-control" value="${expense.expenseDate}">
+                                <input id="expense-date" name="expense-date" type="date" class="form-control" value="${expense.expenseDate!=null?expense.expenseDate:expenseDate}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="note" class="col-lg-2 col-form-label">メモ</label>
                             <div class="col-lg-9">
-                                <textarea id="note" name="note" class="form-control" rows="4" cols="50">${expense.note}</textarea>
+                                <textarea id="note" name="note" class="form-control" rows="4" cols="50">${expense.note!=null?expense.note:note}</textarea>
                             </div>
                         </div>
 

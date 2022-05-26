@@ -13,7 +13,7 @@ import beans.ExpenseDataBeans;
 
 public class ExpenseDAO {
 
-  // 全ての出費を取得するメソッド
+  // 全ての出費を取得するメソッド（戻り値：リスト）
   public static List<ExpenseDataBeans> findAll(int userId) {
     System.out.println("ExpenseDAO、findAll内");
     List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
@@ -64,7 +64,7 @@ public class ExpenseDAO {
     return expenseList;
   }
   
-  // 出費IDから出費情報を取得するリスト
+  // 出費IDから出費情報を取得するメソッド（戻り値：インスタンス）
   public static ExpenseDataBeans findById(int expenseId) {
     System.out.println("ExpenseDAO、findById内");
     ExpenseDataBeans edb = new ExpenseDataBeans();
@@ -111,6 +111,92 @@ public class ExpenseDAO {
     }
 
     return edb;
+  }
+
+  // 検索条件に該当する出費を探し出すメソッド（戻り値：リスト）
+  public static List<ExpenseDataBeans> searchExpense(int userId, String expenseName,
+      String categoryId, String startDate, String endDate) {
+    System.out.println("ExpenseDAO、searchExpense内");
+    List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
+    Connection con = null;
+    PreparedStatement st = null;
+    
+    try {
+      con = DBManager.getConnection();
+      String sql = "SELECT * FROM expense WHERE user_id = ?";
+      String sql2 = " ORDER BY date ASC";
+
+      List<String> parameterList = new ArrayList<String>();
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(sql);
+      if (!expenseName.equals("")) {
+        sb.append(" AND name LIKE CONCAT('%',?,'%')");
+        parameterList.add(expenseName);
+      }
+      if (!categoryId.equals("")) {
+        sb.append(" AND category_id = ?");
+        parameterList.add(categoryId);
+      }
+      if (!startDate.equals("") && !endDate.equals("")) {
+        sb.append(" AND date BETWEEN ? AND ?");
+        parameterList.add(startDate);
+        parameterList.add(endDate);
+      }
+
+      /*
+       * if (!price.equals("")) { sb.append(" AND price = ?"); parameterList.add(price); } if
+       * (!note.equals("")) { sb.append("AND note LIKE CONCAT('%',?,'%')"); parameterList.add(note);
+       * }
+       */
+
+      sb.append(sql2);
+
+
+      st = con.prepareStatement(sb.toString());
+      st.setInt(1, userId);
+
+      for (int i = 0; i < parameterList.size(); i++) {
+        st.setString(i + 2, parameterList.get(i));
+      }
+      ResultSet rs = st.executeQuery();
+
+
+      while (rs.next()) {
+        int id = rs.getInt("id");
+        // int userId = rs.getInt("user_id");
+        int categoryId2 = rs.getInt("category_id");
+        String name = rs.getString("name");
+        int price2 = rs.getInt("price");
+        Date expenseDate = rs.getDate("date");
+        String note2 = rs.getString("note");
+        Timestamp createDate = rs.getTimestamp("create_date");
+        Timestamp updateDate = rs.getTimestamp("update_date");
+        String categoryName = CategoryDAO.getCategoryName(categoryId2);
+
+        ExpenseDataBeans edb = new ExpenseDataBeans(id, userId, categoryId2, name, price2,
+            expenseDate, note2, createDate, updateDate, categoryName);
+
+        expenseList.add(edb);
+
+      }
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      if (con!=null) {
+        try {
+          con.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    
+    return expenseList;
   }
 
   // 出費を追加するメソッド（引数は全て、Stringのままで良い）

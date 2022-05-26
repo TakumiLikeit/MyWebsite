@@ -59,38 +59,47 @@ public class AddExpenseServlet extends HttpServlet {
 
       // 例外処理。（現段階では、空欄がある場合のみ）
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
+
+      boolean existsErr = false;
+      if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
+        request.setAttribute("errMsgPrice", "値段は正の半角数字で入力してください");
+        existsErr = true;
+      } else if (ExpenseHelper.isNegative(price)) {
+        request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
+        existsErr = true;
+      }
+
       if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
         request.setAttribute("errMsg", "入力必須項目に空欄があります");
+        existsErr = true;
+      }
 
+      if (existsErr) {
         request.setAttribute("expenseName", expenseName);
         request.setAttribute("price", price);
-        request.setAttribute("categoryId", categoryId);// ここ変える、5/25
+        request.setAttribute("categoryId", categoryId);
         request.setAttribute("expenseDate", expenseDate);
         request.setAttribute("note", note);
 
         request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
-        // return;
-      } else {
-
-        HttpSession session = request.getSession();
-        UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-        if (udb == null) {
-          System.out.println("udbはnullです");
-        }
-        {
-          System.out.println("udbはnullじゃないです");
-        }
-        String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い
-
-
-        if (ExpenseDAO.addExpenseSuccess(userId, expenseName, price, categoryId, expenseDate, note)) {
-          System.out.println("出費の追加、成功");
-        } else {
-          System.out.println("出費の追加、失敗");
-        }
-
-        response.sendRedirect("ExpenseListServlet");
+        return;
       }
+
+
+      HttpSession session = request.getSession();
+      UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
+
+      String userId = String.valueOf(udb.getId());// ここの値がnullで問題が生じている可能性が高い
+
+
+      if (ExpenseDAO.addExpenseSuccess(userId, expenseName, price, categoryId, expenseDate, note)) {
+        System.out.println("出費の追加、成功");
+      } else {
+        System.out.println("出費の追加、失敗");
+      }
+
+      response.sendRedirect("ExpenseListServlet");
+
 
 	}
 

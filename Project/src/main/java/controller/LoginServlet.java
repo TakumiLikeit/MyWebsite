@@ -54,20 +54,21 @@ public class LoginServlet extends HttpServlet {
       String password = request.getParameter("password");
 
       // パスワードの暗号化
-      // String encodedPassword = ExpenseHelper.encodePassword(password);
+      String encodedPassword = ExpenseHelper.encodePassword(password);
 
       UserDataBeans udb = null;
 
+      
       try {
 
-        udb = UserDAO.getUser(loginId, password); // ここでnullじゃないっぽいのだよな
+        udb = UserDAO.getUser(loginId, encodedPassword); // encodedPassword
 
         /** テーブルに該当のデータが見つからなかった場合 * */
         if (udb == null) {
           System.out.println("doPost内、該当のユーザがいません");
           request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
           request.setAttribute("loginId", loginId);
-          request.setAttribute("password", password);
+          request.setAttribute("password", password);// ここのパスワードはそのままでOK
 
           // login.jspへフォワード
           request.getRequestDispatcher(ExpenseHelper.LOGIN_PAGE).forward(request, response);

@@ -41,7 +41,13 @@ public class UpdateExpenseServlet extends HttpServlet {
       }
 
       // - - - - - - - - - - - - - - - - -
-      int expenseId = Integer.valueOf(request.getParameter("id"));
+      String expenseIdStr = request.getParameter("id");
+      if (expenseIdStr == null) {
+        response.sendRedirect("ExpenseListServlet");
+        return;
+      }
+
+      int expenseId = Integer.valueOf(expenseIdStr);
       // ExpenseDAO内にfindByIdというメソッドをつくる
       ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
       request.setAttribute("expense", edb);
@@ -79,32 +85,35 @@ public class UpdateExpenseServlet extends HttpServlet {
 
       // 例外処理。（現段階では、空欄がある場合のみ）
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
-      if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
-        System.out.println("AddExpenseServlet、doPost内、isEmptyの場合");
-        request.setAttribute("errMsg", "入力必須項目に空欄があります");
-
-        request.setAttribute("id", expenseId);
-        request.setAttribute("expenseName", expenseName);
-        request.setAttribute("price", price);
-        request.setAttribute("categoryId", categoryId);
-        request.setAttribute("expenseDate", expenseDate);
-        request.setAttribute("note", note);
-
-        request.getRequestDispatcher(ExpenseHelper.EXPENSE_UPDATE_PAGE).forward(request, response);
-        // return;
-      } else {
-        System.out.println("AddExpenseServlet、doPost内、isEmptyでない場合");
+        boolean existsErr = false;
+        if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
+          request.setAttribute("errMsgPrice", "値段は半角数字で入力してください");
+          existsErr = true;
+        } else if (ExpenseHelper.isNegative(price)) {
+          request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
+          existsErr = true;
+        }
+    
+        if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
+          request.setAttribute("errMsg", "入力必須項目に空欄があります");
+          existsErr = true;
+        }
+    
+        if (existsErr) {
+          request.setAttribute("expenseName", expenseName);
+          request.setAttribute("price", price);
+          request.setAttribute("categoryId", categoryId);
+          request.setAttribute("expenseDate", expenseDate);
+          request.setAttribute("note", note);
+    
+          request.getRequestDispatcher(ExpenseHelper.EXPENSE_UPDATE_PAGE).forward(request,
+              response);
+          return;
+        }
 
         HttpSession session = request.getSession();
         UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-        if (udb == null) {
-          System.out.println("udbはnullです");
-        }
-        {
-          System.out.println("udbはnullじゃないです");
-        }
 
-        System.out.println("あいうえお");
 
 
         // 変更中 int id = udb.getId();
@@ -121,7 +130,7 @@ public class UpdateExpenseServlet extends HttpServlet {
 
         response.sendRedirect("ExpenseListServlet");
 
-      }
+
 	}
 
 }

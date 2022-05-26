@@ -52,7 +52,7 @@
                     <div class="form-inline">
                         <!--リスト、classはnav-item-->
                         <li class="nav-item mr-2">
-                            <span class="navbar-text">${userInfo.name} ${userInfo.id} さん</span>
+                            <span class="navbar-text">${userInfo.name} さん</span>
                         </li>
 
                         <li class="nav-item">
@@ -101,7 +101,7 @@
                             <label for="exspense-name" class="col-lg-2 col-form-label">商品名</label>
                             <div class="col-lg-9">
                                 <!--ここのdivにもclassを付与して良い-->
-                                <input id="expense-name" type="text" class="form-control">
+                                <input id="expense-name" name="expense-name" type="text" class="form-control" value="${expenseName}">
                                 <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
@@ -112,21 +112,21 @@
                             <div>
                                 <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 <select id="category" name="category" class="form-control offset-1">
-                                    <option value="">選択する</option>
-                                    <option value="food">食費</option>
-                                    <option value="leisure">娯楽</option>
-                                    <option value="restaurant">レストラン</option>
-                                    <option value="travel">旅・レジャー</option>
-                                    <option value="transport">交通</option>
-                                    <option value="medical">医療</option>
-                                    <option value="personal-care">パーソナルケア</option>
-                                    <option value="education">教育</option>
-                                    <option value="gadget">電子機器</option>
-                                    <option value="communication">スマホ・通信</option>
-                                    <option value="housing">住宅</option>
-                                    <option value="heat-light-water">水道光熱費</option>
-                                    <option value="clothing">衣類</option>
-                                    <option value="others">その他</option>
+                                    <option ${categoryId.equals("")?"selected":""} value="">選択する</option>
+                                    <option ${categoryId.equals("1")?"selected":""} value="1">食費</option>
+                                    <option ${categoryId.equals("2")?"selected":""} value="2">娯楽</option>
+                                    <option ${categoryId.equals("3")?"selected":""} value="3">レストラン</option>
+                                    <option ${categoryId.equals("4")?"selected":""} value="4">旅・レジャー</option>
+                                    <option ${categoryId.equals("5")?"selected":""} value="5">交通</option>
+                                    <option ${categoryId.equals("6")?"selected":""} value="6">医療</option>
+                                    <option ${categoryId.equals("7")?"selected":""} value="7">パーソナルケア</option>
+                                    <option ${categoryId.equals("8")?"selected":""} value="8">教育</option>
+                                    <option ${categoryId.equals("9")?"selected":""} value="9">電子機器</option>
+                                    <option ${categoryId.equals("10")?"selected":""} value="10">スマホ・通信</option>
+                                    <option ${categoryId.equals("11")?"selected":""} value="11">住宅</option>
+                                    <option ${categoryId.equals("12")?"selected":""} value="12">水道光熱費</option>
+                                    <option ${categoryId.equals("13")?"selected":""} value="13">衣類</option>
+                                    <option ${categoryId.equals("14")?"selected":""} value="14">その他</option>
                                 </select>
                             </div>
                         </div>
@@ -134,11 +134,11 @@
                         <div class="form-group row">
                             <label for="duration" class="control-label col-2">期間</label>
                             <div class="col-lg-4">
-                                <input id="duration1" name="start-date" type="date" class="form-control">
+                                <input id="duration1" name="start-date" type="date" class="form-control" value="${startDate}">
                             </div>
                             <div class="col-1" style="text-align:center;">~</div>
                             <div class="col-lg-4">
-                                <input id="duration2" name="end-date" type="date" class="form-control">
+                                <input id="duration2" name="end-date" type="date" class="form-control" value="${endDate}">
                             </div>
                         </div>
 
