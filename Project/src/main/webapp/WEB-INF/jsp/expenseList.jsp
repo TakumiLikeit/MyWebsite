@@ -189,6 +189,7 @@
 		                            <td class="table-h col-3">${expense.categoryName}</td>
 		                            <td>
 		                            	<!-- ここのexpenseにちゃんとidは入っているだろうか -->
+		                            	<!-- a hrefだと、doGetに飛ばされている可能性あり -->
 			                            <a href="UpdateExpenseServlet?id=${expense.id}" class="table-h col-3">${expense.name}</a>
 		                            </td>
 		                            <td class="table-h col-3">${expense.price}</td>

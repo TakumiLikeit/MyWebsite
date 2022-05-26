@@ -61,6 +61,7 @@ public class UpdateExpenseServlet extends HttpServlet {
       //expenseのidを取得（出費id）
       String expenseId = request.getParameter("id"); // ここでnullが発生している可能性があり 5/26 jspのa
                                                      // hrefでリンクのidを飛ばせているかチェック(expenseList.jsp)
+                                                     // input hiddenを用意してあげないといけない
       System.out.println("expenseId: " + expenseId);
 
       // ここの段階では、まだ全部Stringの方が空欄かどうか判別しやすい

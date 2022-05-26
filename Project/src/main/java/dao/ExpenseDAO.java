@@ -82,7 +82,7 @@ public class ExpenseDAO {
       
       if (rs.next()) {
         // int id = rs.getInt("id");
-        edb.setId(expenseId);
+        edb.setId(rs.getInt("id")); // expenseId
         edb.setUserId(rs.getInt("user_id"));
         int categoryId = rs.getInt("category_id");
         edb.setCategoryId(categoryId);

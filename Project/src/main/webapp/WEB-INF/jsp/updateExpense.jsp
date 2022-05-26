@@ -71,7 +71,7 @@
                     <form action="UpdateExpenseServlet" method="post">
 
 						<!-- idをサーブレットに返さなければいけない -->
-						<input id="expense-id" name="expense-id" type="hidden" value="${expense.id}">
+						<input id="id" name="id" type="hidden" value="${expense.id}">
 						
                         <div class="form-group row">
                             <!--入力部品をform-groupで囲み-->
