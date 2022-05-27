@@ -59,15 +59,20 @@ public class UserAddServlet extends HttpServlet {
         existsErr = true;
       }
 
-      if (!UserHelper.isSame(password, passwordConfirm)) {
+      // !UserHelper.isSame(password, passwordConfirm)
+      if (!password.equals(passwordConfirm)) {
         request.setAttribute("errMsgPassword", "パスワードが一致しません");
         existsErr = true;
       }
 
-      if (!UserDAO.existsLoginId(loginId)) {
+      if (UserDAO.existsLoginId(loginId)) {
         request.setAttribute("errMsgLoginId", "同じログインIDの人が既に存在します");
         existsErr = true;
       }
+
+      // パスワード暗号化
+      String encodedPassword = ExpenseHelper.encodePassword(password);
+
 
       if (existsErr) {
         request.setAttribute("loginId", loginId);
@@ -80,7 +85,7 @@ public class UserAddServlet extends HttpServlet {
       // 問題がない場合、UserDAOにユーザーを追加するメソッドを追加して
       // LoginServletへリダイレクト
 
-      UserDAO.addUser(loginId, passwordConfirm, userName);
+      UserDAO.addUser(loginId, userName, encodedPassword);
       response.sendRedirect("LoginServlet");
 
 	}

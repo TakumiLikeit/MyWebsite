@@ -49,10 +49,13 @@
 
     <div class="container-fluid">
     	<c:if test="${errMsg!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsg} 空欄項目があります</div>
+        	<div class="alert alert-danger" role="alert">${errMsg}</div>
 		</c:if>
-    	<c:if test="${errMsgPrice!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsgLoginId} 同じログインIDの人がいます</div>
+    	<c:if test="${errMsgPassword!=null}">
+        	<div class="alert alert-danger" role="alert">${errMsgPassword}</div>
+		</c:if>
+    	<c:if test="${errMsgLoginId!=null}">
+        	<div class="alert alert-danger" role="alert">${errMsgLoginId}</div>
 		</c:if>
         <div class="card mb-1">
             <!--cardはテーブルのようなボックスを作り出す-->
@@ -71,30 +74,30 @@
                     <form action="UserAddServlet" method="post">
 
                         <div class="form-group row">
-                            <label for="exspense-name" class="col-lg-2 col-form-label">ログインID</label>
+                            <label for="login-id" class="col-lg-2 col-form-label">ログインID</label>
                             <div class="col-lg-9">
-                                <input id="login-id" name="login-id" type="text" class="form-control" value="${loginId} admin">
+                                <input id="login-id" name="login-id" type="text" class="form-control" value="${loginId}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="exspense-name" class="col-lg-2 col-form-label">パスワード</label>
+                            <label for="password" class="col-lg-2 col-form-label">パスワード</label>
                             <div class="col-lg-9">
-                                <input id="password" name="password" type="password" class="form-control" value="${password} password">
+                                <input id="password" name="password" type="password" class="form-control" value="${password}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="exspense-name" class="col-lg-2 col-form-label">パスワード確認</label>
+                            <label for="password-confirm" class="col-lg-2 col-form-label">パスワード確認</label>
                             <div class="col-lg-9">
                                 <input id="password-confirm" name="password-confirm" type="password" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="exspense-name" class="col-lg-2 col-form-label">ユーザー名</label>
+                            <label for="user-name" class="col-lg-2 col-form-label">ユーザー名</label>
                             <div class="col-lg-9">
-                                <input id="name" name="name" type="text" class="form-control" value="${userName} 管理者">
+                                <input id="user-name" name="user-name" type="text" class="form-control" value="${userName}">
                             </div>
                         </div>
 

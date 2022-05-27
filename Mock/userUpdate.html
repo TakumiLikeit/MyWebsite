@@ -51,6 +51,15 @@
     	<c:if test="${errMsgPrice!=null}">
         	<div class="alert alert-danger" role="alert">${errMsgLoginId} 同じログインIDの人がいます</div>
 		</c:if>
+
+        <div class="alert alert-danger" role="alert">
+            <ol>
+                <li>空欄項目があります</li>
+                <li>同じログインIDの人がいます</li>
+            </ol>
+        </div>
+
+
         <div class="card mb-1">
             <!--cardはテーブルのようなボックスを作り出す-->
             <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
