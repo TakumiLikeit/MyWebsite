@@ -94,7 +94,7 @@
                             <a href="UserUpdateServlet" type="button" class="btn btn-primary btn-block">編集する</a>
                         </div>
                         <div class="col-3">
-                            <a href="UserWithDrawServlet" type="button" class="btn btn-danger btn-block">退会する</a>
+                            <a href="UserWithdrawServlet" type="button" class="btn btn-danger btn-block">退会する</a>
                         </div>
                     </div>
                         

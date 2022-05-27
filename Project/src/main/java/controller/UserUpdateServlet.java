@@ -87,9 +87,8 @@ public class UserUpdateServlet extends HttpServlet {
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
-      int userId = udb.getId();
-      String loginId = udb.getLoginId();
 
+      int userId = udb.getId();
 
 
       // 問題がない場合、はUserDAOのメソッドによってデータを更新し、ユーザー詳細画面へリダイレクト
@@ -97,25 +96,13 @@ public class UserUpdateServlet extends HttpServlet {
       UserDAO.updateUser(userId, password, passwordConfirm, userName);
       
 
-      /*
-       * String encodedPassword = password;
-       * 
-       * if (!password.equals("")) { encodedPassword = ExpenseHelper.encodePassword(password);
-       * System.out.println("encodedPassword:"); System.out.println(encodedPassword); }
-       * 
-       * // パスワード暗号化
-       */
-
       UserDataBeans updatedUdb = null;
-      System.out.println("loginId: " + loginId);
+
 
       try {
         System.out.println("try-catchの中");
 
-
         // UserDAO内に、新しくメソッドを追加, ログインID（もしくはユーザーID）だけでユーザーのインスタンスを取得できるようにする
-
-
         updatedUdb = UserDAO.getUserById(userId);// ちゃんとupdateはできてるが、ここでudbがnullになっている
       } catch (SQLException e) {
         e.printStackTrace();
@@ -128,7 +115,6 @@ public class UserUpdateServlet extends HttpServlet {
 
       }
 
-      // System.out.println("name: " + updatedUdb.getName());
 
       session.removeAttribute("userInfo");
       session.setAttribute("userInfo", updatedUdb);

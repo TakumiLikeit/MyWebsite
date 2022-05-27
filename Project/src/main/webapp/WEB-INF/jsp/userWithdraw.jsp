@@ -34,7 +34,7 @@
 
         <div class="card">
             <div class="card-header">
-                <p class="mt-3">アラキ ${user.name} さん、本当に退会しますか？</p>
+                <p class="mt-3">${user.name} さん、本当に退会しますか？</p>
             </div>
             <div class="card-body my-sm-4">
 
@@ -44,7 +44,6 @@
                     </div>
                     <div class="col-3">
                         <form action="UserWithdrawServlet" method="post">
-                        		<input type="hidden" id="id" name="id" value="${expense.id}">
                                 <input type="submit" id="yes" name="yes" value="退会する" class="btn btn-danger  btn-block">
                         </form>
                     </div>
