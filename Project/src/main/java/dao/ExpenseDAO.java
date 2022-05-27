@@ -324,5 +324,37 @@ public class ExpenseDAO {
 
   }
 
+  public static void deleteExpenseByUserId(int userId) {
+    System.out.println("ExpenseDAO、deleteExpenseByUserId内");
+    Connection con = null;
+    PreparedStatement st = null;
+
+    try {
+      con = DBManager.getConnection();
+      String sql = "DELETE FROM expense WHERE user_id = ?";
+      st = con.prepareStatement(sql);
+      st.setInt(1, userId);
+
+      int result = st.executeUpdate();
+
+      System.out.println("result: " + result);
+
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      if (con != null) {
+        try {
+          con.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+  }
+
 }
 

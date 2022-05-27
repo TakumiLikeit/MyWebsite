@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import beans.UserDataBeans;
 import util.ExpenseHelper;
 
 /**
@@ -27,16 +29,19 @@ public class UserDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+      HttpSession session = request.getSession();
+      UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
+      if (udb == null) {
+        response.sendRedirect("LoginServlet");
+        return;
+      }
+
+      request.setAttribute("user", udb);
 
       // userDetail.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.USER_DETAIL_PAGE).forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
 
 }
