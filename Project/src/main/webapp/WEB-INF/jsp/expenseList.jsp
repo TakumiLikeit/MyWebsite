@@ -52,7 +52,8 @@
                     <div class="form-inline">
                         <!--リスト、classはnav-item-->
                         <li class="nav-item mr-2">
-                            <span class="navbar-text">${userInfo.name} さん</span>
+                        	<a class="nav-link navbar-text" href="UserDetailServlet">${userInfo.name} さん</a>
+                            <!-- <span class="navbar-text">${userInfo.name} さん</span> -->
                         </li>
 
                         <li class="nav-item">

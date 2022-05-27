@@ -38,7 +38,7 @@ public class UserUpdateServlet extends HttpServlet {
         return;
       }
 
-      request.setAttribute("user", udb);
+      // request.setAttribute("user", udb);
 
       // userUpdate.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.USER_UPDATE_PAGE).forward(request, response);

@@ -37,7 +37,7 @@ public class UserDetailServlet extends HttpServlet {
         return;
       }
 
-      request.setAttribute("user", udb);
+      // request.setAttribute("user", udb);
 
       // userDetail.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.USER_DETAIL_PAGE).forward(request, response);

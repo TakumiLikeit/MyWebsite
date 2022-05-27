@@ -68,22 +68,24 @@
                     <div class="form-group row">
                         <label for="login-id" class="col-lg-2">ログインID:</label>
                         <div class="col-lg-9">
-                            <p id="login-id">${loginId} admin</p>
+                            <p id="login-id">${userInfo.loginId}</p>
                         </div>
                     </div>
 
                     <!--パスワードは表示したり、非表示にしたりできるようにしたい-->
+                    <!-- 
                     <div class="form-group row">
                         <label for="password" class="col-lg-2">パスワード:</label>
                         <div class="col-lg-9">
-                            <p id="login-id">${password} password</p>
+                            <p id="login-id">${userInfo.password}</p>
                         </div>
                     </div>
+                     -->
 
                     <div class="form-group row">
                         <label for="user-name" class="col-lg-2">ユーザー名:</label>
                         <div class="col-lg-9">
-                            <p id="user-name">{userName} 管理者</p>
+                            <p id="user-name">${userInfo.name}</p>
                         </div>
                     </div>
 
