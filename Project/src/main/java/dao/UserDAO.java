@@ -55,6 +55,48 @@ public class UserDAO {
     return udb;
   }
 
+  public static UserDataBeans getUserById(int userId) throws SQLException {
+    UserDataBeans udb = null;
+    Connection con = null;
+    PreparedStatement st = null;
+
+    try {
+      con = DBManager.getConnection();
+      String sql = "SELECT * FROM user WHERE id=?";
+      st = con.prepareStatement(sql);
+      st.setInt(1, userId);
+      ResultSet rs = st.executeQuery();
+
+      if (rs.next()) {
+        udb = new UserDataBeans();
+
+        udb.setId(rs.getInt("id"));
+        udb.setLoginId(rs.getString("login_id"));
+        udb.setName(rs.getString("name"));
+        udb.setPassword(rs.getString("password"));
+        udb.setCreateDate(rs.getTimestamp("create_date"));
+        udb.setUpdateDate(rs.getTimestamp("update_date"));
+      }
+
+      st.close();
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      // throw new SQLException(e);
+      e.printStackTrace();
+
+    } finally {
+      if (con != null) {
+        con.close();
+      }
+      if (st != null) {
+        st.close();
+      }
+    }
+
+    return udb;
+  }
+
   public static void addUser(String loginId, String password, String userName) {
 
     System.out.println("UserDAO、addUser内");

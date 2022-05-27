@@ -58,6 +58,8 @@ public class UserUpdateServlet extends HttpServlet {
       String passwordConfirm = request.getParameter("password-confirm");
       String userName = request.getParameter("user-name");
 
+      // ここで、jspからパスワードゲットしていない時には、passwordに入っている値は違う
+
 
       // 例外処理
       // 問題がある場合、requestパラメターに値をセットして、フォワード
@@ -85,27 +87,36 @@ public class UserUpdateServlet extends HttpServlet {
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
-      int loginId = udb.getId();
-
+      int userId = udb.getId();
+      String loginId = udb.getLoginId();
 
 
 
       // 問題がない場合、はUserDAOのメソッドによってデータを更新し、ユーザー詳細画面へリダイレクト
       // パスワードがどちらも、空欄かどうか（""かどうか）は、UserDAOのメソッド内で判断する
-      UserDAO.updateUser(loginId, password, passwordConfirm, userName);
+      UserDAO.updateUser(userId, password, passwordConfirm, userName);
       
 
-
-      // パスワード暗号化
-      String encodedPassword = ExpenseHelper.encodePassword(password);
+      /*
+       * String encodedPassword = password;
+       * 
+       * if (!password.equals("")) { encodedPassword = ExpenseHelper.encodePassword(password);
+       * System.out.println("encodedPassword:"); System.out.println(encodedPassword); }
+       * 
+       * // パスワード暗号化
+       */
 
       UserDataBeans updatedUdb = null;
-      String loginIdStr = String.valueOf(loginId);
-      System.out.println("userIdStr: " + loginIdStr);
+      System.out.println("loginId: " + loginId);
 
       try {
         System.out.println("try-catchの中");
-        updatedUdb = UserDAO.getUser(loginIdStr, encodedPassword);// ちゃんとupdateはできてるが、ここでudbがnullになっている
+
+
+        // UserDAO内に、新しくメソッドを追加, ログインID（もしくはユーザーID）だけでユーザーのインスタンスを取得できるようにする
+
+
+        updatedUdb = UserDAO.getUserById(userId);// ちゃんとupdateはできてるが、ここでudbがnullになっている
       } catch (SQLException e) {
         e.printStackTrace();
       }
