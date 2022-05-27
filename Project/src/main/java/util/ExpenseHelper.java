@@ -17,6 +17,15 @@ public class ExpenseHelper {
   public static final String EXPENSE_UPDATE_PAGE = "/WEB-INF/jsp/updateExpense.jsp";
   // 出費削除ページ
   public static final String EXPENSE_DELETE_PAGE = "/WEB-INF/jsp/deleteExpense.jsp";
+  // ユーザー追加ページ
+  public static final String USER_ADD_PAGE = "/WEB-INF/jsp/userAdd.jsp";
+  // ユーザー詳細ページ
+  public static final String USER_DETAIL_PAGE = "/WEB-INF/jsp/userDetail.jsp";
+  // ユーザー編集ページ
+  public static final String USER_UPDATE_PAGE = "/WEB-INF/jsp/userUpdate.jsp";
+  // ユーザー退会ページ
+  public static final String USER_WITHDRAW_PAGE = "/WEB-INF/jsp/userWithdraw.jsp";
+
 
 
   // String, int, String, Date
