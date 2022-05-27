@@ -80,30 +80,29 @@
                     <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
                     <form action="UserUpdateServlet" method="post">
 
-                        <input  name="login-id" type="hidden"  value="${userInfo.loginId}">
-                        <div class="row">
-                            <label for="login-id" class="col-lg-2 mt-1">ログインID</label>
+                        <div class="row  mt-1">
+                            <label for="login-id" class="col-lg-3">ログインID</label>
                             <div class="col-lg-9">
-                                <p id="login-id">${useInfo.loginId}</p>
+                                <p id="login-id">${userInfo.loginId}</p>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-lg-2 col-form-label">パスワード</label>
+                            <label for="password" class="col-lg-3 col-form-label">パスワード</label>
                             <div class="col-lg-9">
-                                <input id="password" name="password" type="password" class="form-control" value="${password!=null?password:""}">
+                                <input id="password" name="password" type="password" class="form-control" value="${password!=null?password :""}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-lg-2 col-form-label">パスワード確認</label>
+                            <label for="password-confirm" class="col-lg-3 col-form-label">パスワード確認</label>
                             <div class="col-lg-9">
                                 <input id="password-confirm" name="password-confirm" type="password" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="user-name" class="col-lg-2 col-form-label">ユーザー名</label>
+                            <label for="user-name" class="col-lg-3 col-form-label">ユーザー名</label>
                             <div class="col-lg-9">
                                 <input id="user-name" name="user-name" type="text" class="form-control" value="${userName!=null?userName:userInfo.name}">
                             </div>

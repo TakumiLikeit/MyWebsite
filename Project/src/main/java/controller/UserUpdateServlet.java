@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,7 +53,7 @@ public class UserUpdateServlet extends HttpServlet {
 
       // requestパラメターの取得
       // jspファイルでログインIDは変更できないようにしないといけない
-      String loginId = request.getParameter("login-id");
+      // String loginId = request.getParameter("login-id");
       String password = request.getParameter("password");
       String passwordConfirm = request.getParameter("password-confirm");
       String userName = request.getParameter("user-name");
@@ -63,8 +64,8 @@ public class UserUpdateServlet extends HttpServlet {
 
       boolean existsErr = false;
 
-      if (UserHelper.isEmptyEither(loginId, userName)) {
-        request.setAttribute("errMsg", "必須項目に空欄のものがあります");
+      if (userName.equals("")) {
+        request.setAttribute("errMsg", "ユーザー名が空欄です");
         existsErr = true;
       }
 
@@ -74,24 +75,52 @@ public class UserUpdateServlet extends HttpServlet {
       }
 
       if (existsErr) {
-        request.setAttribute("loginId", loginId);
+        // request.setAttribute("loginId", loginId);
         request.setAttribute("password", password);
         request.setAttribute("userName", userName);
-        request.getRequestDispatcher(ExpenseHelper.USER_ADD_PAGE).forward(request, response);
+        request.getRequestDispatcher(ExpenseHelper.USER_UPDATE_PAGE).forward(request, response);
         return;
       }
 
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
-      int userId = udb.getId();
+      int loginId = udb.getId();
+
+
 
 
       // 問題がない場合、はUserDAOのメソッドによってデータを更新し、ユーザー詳細画面へリダイレクト
       // パスワードがどちらも、空欄かどうか（""かどうか）は、UserDAOのメソッド内で判断する
-      UserDAO.updateUser(userId, password, passwordConfirm, userName);
+      UserDAO.updateUser(loginId, password, passwordConfirm, userName);
+      
 
 
+      // パスワード暗号化
+      String encodedPassword = ExpenseHelper.encodePassword(password);
+
+      UserDataBeans updatedUdb = null;
+      String loginIdStr = String.valueOf(loginId);
+      System.out.println("userIdStr: " + loginIdStr);
+
+      try {
+        System.out.println("try-catchの中");
+        updatedUdb = UserDAO.getUser(loginIdStr, encodedPassword);// ちゃんとupdateはできてるが、ここでudbがnullになっている
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+
+      if (updatedUdb == null) {
+        System.out.println("updatedUdb: null");
+      } else {
+        System.out.println("updatedUdb: not null");
+
+      }
+
+      // System.out.println("name: " + updatedUdb.getName());
+
+      session.removeAttribute("userInfo");
+      session.setAttribute("userInfo", updatedUdb);
 
 
       response.sendRedirect("UserDetailServlet");

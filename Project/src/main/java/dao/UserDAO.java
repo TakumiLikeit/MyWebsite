@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import base.DBManager;
 import beans.UserDataBeans;
+import util.ExpenseHelper;
 import util.UserHelper;
 
 public class UserDAO {
@@ -94,7 +95,7 @@ public class UserDAO {
     System.out.println("UserDAO、updateUser内");
     Connection con = null;
     PreparedStatement st = null;
-
+    
     try {
       con = DBManager.getConnection();
       String str1 = "UPDATE user " + "SET name=? WHERE id = ?";
@@ -105,9 +106,10 @@ public class UserDAO {
         st.setString(1, userName);
         st.setInt(2, userId);
       } else {
+        String encodedPassword = ExpenseHelper.encodePassword(password);
         st = con.prepareStatement(str2);
         st.setString(1, userName);
-        st.setString(2, password);
+        st.setString(2, encodedPassword);
         st.setInt(3, userId);
       }
 
