@@ -40,11 +40,29 @@
             <!--navってなんだ-->
             <!--navをいれるとちょっと下がる-->
             <div class="container-fluid">
-                <div class="col-6 offset-1">
+                <div class="navbar-brand">
                     <h4>出費編集画面</h4>
                 </div>
+            
+            
+                <ul class="navbar-nav ml-auto">
+                    <!--横並べにする-->
+                    <div class="form-inline">
+                        <!--リスト、classはnav-item-->
+                        <li class="nav-item mr-2">
+                        	<a class="nav-link navbar-text" href="UserDetailServlet">${userInfo.name} さん</a>
+                            <!-- <span class="navbar-text">${userInfo.name} さん</span> -->
+                        </li>
+
+                        <li class="nav-item">
+                            <!--nav-linkにするとアンダーバーが表示されない-->
+                            <a class="nav-link text-danger" href="LogoutServlet">ログアウト</a>
+                        </li>
+                    </div>
+                </ul>
             </div>
         </nav>
+        
     </header>
 
     <!--<div class="space-h"></div>-->

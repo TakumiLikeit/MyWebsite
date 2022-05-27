@@ -22,7 +22,9 @@
             <!--navってなんだ-->
             <!--navをいれるとちょっと下がる-->
             <div class="container-fluid">
-                <div class="col-6 offset-1">ログイン画面</div>
+                <div class="navbar-brand">
+                	<h4>ログイン画面</h4>
+                </div>
             </div>
         </nav>
     </header>
