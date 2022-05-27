@@ -77,39 +77,51 @@ public class UpdateExpenseServlet extends HttpServlet {
       String expenseDate = request.getParameter("expense-date");
       String note = request.getParameter("note");
 
-      /*
-       * System.out.println("expenseName: " + expenseName); System.out.println("price: " + price);
-       * System.out.println("categoryId: " + categoryId); System.out.println("expenseDate: " +
-       * expenseDate); System.out.println("note: " + note);
-       */
+      StringBuilder errMsg = new StringBuilder();
 
-      // 例外処理
-      // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
-        boolean existsErr = false;
-        if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
-          request.setAttribute("errMsgPrice", "値段は半角数字で入力してください");
-          existsErr = true;
-        } else if (ExpenseHelper.isNegative(price)) {
-          request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
-          existsErr = true;
+
+      boolean existsErr = false;
+
+      if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
+        // request.setAttribute("errMsg", "入力必須項目に空欄があります");
+        errMsg.append("<ul><li>入力必須項目に空欄があります</li>");
+        existsErr = true;
+      }
+
+      if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
+        // request.setAttribute("errMsgPrice", "値段は正の半角数字で入力してください");
+        if (!existsErr) {
+          errMsg.append("<ul>");
         }
-    
-        if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
-          request.setAttribute("errMsg", "入力必須項目に空欄があります");
-          existsErr = true;
+        errMsg.append("<li>値段は正の半角数字で入力してください</li>");
+
+        existsErr = true;
+      } else if (ExpenseHelper.isNegative(price)) {
+        // request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
+        if (!existsErr) {
+          errMsg.append("<ul>");
         }
-    
-        if (existsErr) {
-          request.setAttribute("expenseName", expenseName);
-          request.setAttribute("price", price);
-          request.setAttribute("categoryId", categoryId);
-          request.setAttribute("expenseDate", expenseDate);
-          request.setAttribute("note", note);
-    
-          request.getRequestDispatcher(ExpenseHelper.EXPENSE_UPDATE_PAGE).forward(request,
-              response);
-          return;
-        }
+        errMsg.append("<li>値段は0より大きいものを入力してください</li>");
+
+        existsErr = true;
+      }
+
+
+
+      if (existsErr) {
+        errMsg.append("</ul>");
+
+        request.setAttribute("errMsg", String.valueOf(errMsg));
+
+        request.setAttribute("expenseName", expenseName);
+        request.setAttribute("price", price);
+        request.setAttribute("categoryId", categoryId);
+        request.setAttribute("expenseDate", expenseDate);
+        request.setAttribute("note", note);
+
+        request.getRequestDispatcher(ExpenseHelper.EXPENSE_ADD_PAGE).forward(request, response);
+        return;
+      }
 
         HttpSession session = request.getSession();
         UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");

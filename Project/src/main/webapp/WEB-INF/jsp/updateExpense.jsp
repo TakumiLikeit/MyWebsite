@@ -72,9 +72,6 @@
     	<c:if test="${errMsg!=null}">
         	<div class="alert alert-danger" role="alert">${errMsg}</div>
 		</c:if>
-    	<c:if test="${errMsgPrice!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsgPrice}</div>
-		</c:if>
         <div class="card mb-1">
             <!--cardはテーブルのようなボックスを作り出す-->
             <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
