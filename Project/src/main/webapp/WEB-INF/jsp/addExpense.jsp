@@ -67,8 +67,16 @@
 
     <div class="container-fluid">
     	<c:if test="${errMsg!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsg}</div>
+    	
+        	<div class="alert alert-danger" role="alert">
+        	<!-- ol: ordered list, ul: unordered list -->
+	        		${errMsg}
+        	</div>
+        	
 		</c:if>
+		
+		
+		
     	<c:if test="${errMsgPrice!=null}">
         	<div class="alert alert-danger" role="alert">${errMsgPrice}</div>
 		</c:if>

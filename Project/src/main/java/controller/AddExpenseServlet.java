@@ -60,21 +60,45 @@ public class AddExpenseServlet extends HttpServlet {
       // 例外処理。（現段階では、空欄がある場合のみ）
       // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
 
+
+      // "<li></li>
+
+      StringBuilder errMsg = new StringBuilder();
+
+
       boolean existsErr = false;
-      if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
-        request.setAttribute("errMsgPrice", "値段は正の半角数字で入力してください");
-        existsErr = true;
-      } else if (ExpenseHelper.isNegative(price)) {
-        request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
-        existsErr = true;
-      }
 
       if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
-        request.setAttribute("errMsg", "入力必須項目に空欄があります");
+        // request.setAttribute("errMsg", "入力必須項目に空欄があります");
+        errMsg.append("<ul><li>入力必須項目に空欄があります</li>");
         existsErr = true;
       }
 
+      if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
+        // request.setAttribute("errMsgPrice", "値段は正の半角数字で入力してください");
+        if (!existsErr) {
+          errMsg.append("<ul>");
+        }
+        errMsg.append("<li>値段は正の半角数字で入力してください</li>");
+
+        existsErr = true;
+      } else if (ExpenseHelper.isNegative(price)) {
+        // request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
+        if (!existsErr) {
+          errMsg.append("<ul>");
+        }
+        errMsg.append("<li>値段は0より大きいものを入力してください</li>");
+
+        existsErr = true;
+      }
+
+
+
       if (existsErr) {
+        errMsg.append("</ul>");
+
+        request.setAttribute("errMsg", String.valueOf(errMsg));
+
         request.setAttribute("expenseName", expenseName);
         request.setAttribute("price", price);
         request.setAttribute("categoryId", categoryId);
