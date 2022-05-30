@@ -24,7 +24,6 @@ public class LoginServlet extends HttpServlet {
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -48,22 +47,21 @@ public class LoginServlet extends HttpServlet {
     /** @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response) */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-      request.setCharacterEncoding("UTF-8"); // リクエストパラメータの文字化け防止
+      request.setCharacterEncoding("UTF-8"); // 文字化け防止
+      UserDataBeans udb = new UserDataBeans();
 
+      // requestパラメターの取得
       String loginId = request.getParameter("login-id");
       String password = request.getParameter("password");
 
       // パスワードの暗号化
       String encodedPassword = ExpenseHelper.encodePassword(password);
-
-      UserDataBeans udb = null;
-
       
       try {
 
-        udb = UserDAO.getUser(loginId, encodedPassword); // encodedPassword
+        udb = UserDAO.getUser(loginId, encodedPassword);
 
-        /** テーブルに該当のデータが見つからなかった場合 * */
+        /* テーブルに該当のデータが見つからなかった場合 */
         if (udb == null) {
           request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
           request.setAttribute("loginId", loginId);
@@ -80,8 +78,7 @@ public class LoginServlet extends HttpServlet {
         // response.sendRedirect("Error");
       }
 
-      /** テーブルに該当のデータが見つかった場合 * */
-      // セッションにユーザの情報をセット
+      /* テーブルに該当のデータが見つかった場合 */
       HttpSession session = request.getSession();
       session.removeAttribute("userInfo");// 前のデータを削除したい（念の為）
       session.setAttribute("userInfo", udb);

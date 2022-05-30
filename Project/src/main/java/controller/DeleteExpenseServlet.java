@@ -32,18 +32,16 @@ public class DeleteExpenseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+      // sessionスコープにログイン中のユーザーがいるか確認
       HttpSession session = request.getSession();
-
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-
       if (udb == null) {
         response.sendRedirect("LoginServlet");
         return;
       }
 
-      
+      // 出費IDを取得
       int expenseId = Integer.valueOf(request.getParameter("id"));
-      // System.out.println("expenseId" + expenseId);
       ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
       request.setAttribute("expense", edb);
 
@@ -57,12 +55,14 @@ public class DeleteExpenseServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8"); // 文字化け防止
 
-
+      // 出費IDを取得し、出費を削除
       String expenseId = request.getParameter("id");
 
-      // ExpenseDAOに、出費を削除するメソッドを作成
-      ExpenseDAO.deleteExpense(expenseId);
-
+      // 出費IDがnullでない場合、出費を削除
+      if (expenseId != null) {
+        // 出費を削除
+        ExpenseDAO.deleteExpense(expenseId);
+      }
 
       // request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);
       response.sendRedirect("ExpenseListServlet");

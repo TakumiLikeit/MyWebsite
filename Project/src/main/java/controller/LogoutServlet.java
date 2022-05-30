@@ -28,6 +28,7 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+      // sessionスコープからユーザー情報を削除し、LoginServletへリダイレクト
       HttpSession session = request.getSession();
       session.removeAttribute("userInfo");
 

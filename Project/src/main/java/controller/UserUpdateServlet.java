@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import beans.UserDataBeans;
 import dao.UserDAO;
 import util.ExpenseHelper;
-import util.UserHelper;
 
 /**
  * Servlet implementation class UserUpdateServlet
@@ -64,20 +63,27 @@ public class UserUpdateServlet extends HttpServlet {
       // 例外処理
       // 問題がある場合、requestパラメターに値をセットして、フォワード
 
+      StringBuilder errMsg = new StringBuilder();
       boolean existsErr = false;
 
       if (userName.equals("")) {
-        request.setAttribute("errMsg", "ユーザー名が空欄です");
+        errMsg.append("<ul><li>入力必須項目に空欄があります</li>");
         existsErr = true;
       }
 
-      if (!UserHelper.isSame(password, passwordConfirm)) {
-        request.setAttribute("errMsgPassword", "パスワードが一致しません");
+
+      if (!password.equals(passwordConfirm)) {
+        if (!existsErr) {
+          errMsg.append("<ul>");
+        }
+        errMsg.append("<li>パスワードが一致しません</li>");
+
         existsErr = true;
       }
 
       if (existsErr) {
-        // request.setAttribute("loginId", loginId);
+        errMsg.append("</ul>");
+        request.setAttribute("errMsg", String.valueOf(errMsg));
         request.setAttribute("password", password);
         request.setAttribute("userName", userName);
         request.getRequestDispatcher(ExpenseHelper.USER_UPDATE_PAGE).forward(request, response);
@@ -93,6 +99,7 @@ public class UserUpdateServlet extends HttpServlet {
 
       // 問題がない場合、はUserDAOのメソッドによってデータを更新し、ユーザー詳細画面へリダイレクト
       // パスワードがどちらも、空欄かどうか（""かどうか）は、UserDAOのメソッド内で判断する
+      // パスワード暗号化は、UserDAOの方で行う
       UserDAO.updateUser(userId, password, passwordConfirm, userName);
       
 
