@@ -23,7 +23,7 @@ public class ExpenseDAO {
     
     try {
       con = DBManager.getConnection();
-      String str1 = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC";
+      String str1 = "SELECT * FROM expense WHERE user_id = ? ORDER BY date DESC"; // 新しいものが上にくるように表示
       String str2 = "SELECT SUM(price) AS totalExpense FROM expense WHERE user_id = ?";
 
       // 合計金額を取得
@@ -146,7 +146,7 @@ public class ExpenseDAO {
     try {
       con = DBManager.getConnection();
       String sqlSelect = "SELECT * FROM expense WHERE user_id = ?";
-      String sqlOrder = " ORDER BY date ASC";
+      String sqlOrder = " ORDER BY date DESC";
       String sqlTotalExpense = "SELECT SUM(price) AS totalExpense FROM expense WHERE user_id = ?";
 
       // PreparedStatementで使うパラメターを格納するリストと、SQL文を組み立てるStringBuilderを作成
