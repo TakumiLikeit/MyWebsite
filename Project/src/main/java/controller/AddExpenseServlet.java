@@ -23,7 +23,6 @@ public class AddExpenseServlet extends HttpServlet {
      */
     public AddExpenseServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -31,10 +30,9 @@ public class AddExpenseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+      // sessionスコープにログイン中のユーザーがいるか確認
       HttpSession session = request.getSession();
-
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-
       if (udb == null) {
         response.sendRedirect("LoginServlet");
         return;
@@ -50,50 +48,42 @@ public class AddExpenseServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8"); // 文字化け防止
 
-      // ここの段階では、まだ全部Stringの方が空欄かどうか判別しやすい
+      // Stringのままの方が、入力内容を判別しやすい
       String expenseName = request.getParameter("expense-name");
       String price = request.getParameter("price");
       String categoryId = request.getParameter("category");
       String expenseDate = request.getParameter("expense-date");
       String note = request.getParameter("note");
 
-      // 例外処理。（現段階では、空欄がある場合のみ）
-      // ExpenseHelper内に、note以外が空欄なら、エラーを出すようなメソッドを作成
-
-
-      // "<li></li>
-
+      // 例外処理
+      // StringBuilderを使って、エラーメッセージを作成
       StringBuilder errMsg = new StringBuilder();
-
-
       boolean existsErr = false;
 
+      // 入力項目に空欄がある場合（note以外で）
       if (ExpenseHelper.isEmpty(expenseName, price, categoryId, expenseDate)) {
-        // request.setAttribute("errMsg", "入力必須項目に空欄があります");
         errMsg.append("<ul><li>入力必須項目に空欄があります</li>");
         existsErr = true;
       }
 
+      // priceが数字でない、もしくは0以下の場合
       if (!ExpenseHelper.isNumeric(price) || ExpenseHelper.isOnlySign(price)) {
-        // request.setAttribute("errMsgPrice", "値段は正の半角数字で入力してください");
         if (!existsErr) {
           errMsg.append("<ul>");
         }
         errMsg.append("<li>値段は正の半角数字で入力してください</li>");
-
         existsErr = true;
+
       } else if (ExpenseHelper.isNegative(price)) {
-        // request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
         if (!existsErr) {
           errMsg.append("<ul>");
         }
         errMsg.append("<li>値段は0より大きいものを入力してください</li>");
-
         existsErr = true;
       }
 
 
-
+      // 入力に問題がある場合、requestパラメターに値をセットして、addExpense.jspへフォワード
       if (existsErr) {
         errMsg.append("</ul>");
 
@@ -109,19 +99,15 @@ public class AddExpenseServlet extends HttpServlet {
         return;
       }
 
-
+      // ユーザーIDをString型で取得
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-
       String userId = String.valueOf(udb.getId());
 
+      // 出費を追加
+      ExpenseDAO.addExpense(userId, expenseName, price, categoryId, expenseDate, note);
 
-      if (ExpenseDAO.addExpenseSuccess(userId, expenseName, price, categoryId, expenseDate, note)) {
-        System.out.println("出費の追加、成功");
-      } else {
-        System.out.println("出費の追加、失敗");
-      }
-
+      // ExpenseListServletへリダイレクト
       response.sendRedirect("ExpenseListServlet");
 
 
