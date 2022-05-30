@@ -16,37 +16,57 @@ public class ExpenseDAO {
   // 全ての出費を取得するメソッド（戻り値：リスト）
   public static List<ExpenseDataBeans> findAll(int userId) {
     System.out.println("ExpenseDAO、findAll内");
-    List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
+    List<ExpenseDataBeans> expenseList = null; // new ArrayList<ExpenseDataBeans>()
     Connection con = null;
     PreparedStatement st = null;
+    PreparedStatement stSum = null;
     
     try {
       con = DBManager.getConnection();
-      String sql = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC"; // WHERE user_id = ?
-      st = con.prepareStatement(sql);
+      String str1 = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC";
+      String str2 = "SELECT SUM(price) AS totalExpense FROM expense WHERE user_id = ?";
+
+
+      stSum = con.prepareStatement(str2);
+      stSum.setInt(1, userId);// テスト的に1を代入してみる
+      ResultSet rsSum = stSum.executeQuery();
+
+      int totalExpense = 0;
+      if (rsSum.next()) {
+        totalExpense = rsSum.getInt("totalExpense");
+        System.out.println("totalExpense: " + totalExpense);
+      }
+
+      st = con.prepareStatement(str1);
       st.setInt(1, userId);// テスト的に1を代入してみる
       ResultSet rs = st.executeQuery();
 
-      while (rs.next()) {
-        int id = rs.getInt("id");
-        // int userId = rs.getInt("user_id");
-        int categoryId = rs.getInt("category_id");
-        String name = rs.getString("name");
-        int price = rs.getInt("price");
-        Date expenseDate = rs.getDate("date");
-        String note = rs.getString("note");
-        Timestamp createDate = rs.getTimestamp("create_date");
-        Timestamp updateDate = rs.getTimestamp("update_date");
-        String categoryName = CategoryDAO.getCategoryName(categoryId);
+      if (rs.next()) {
+        expenseList = new ArrayList<ExpenseDataBeans>();
 
-        ExpenseDataBeans edb = new ExpenseDataBeans(id, userId, categoryId, name, price,
-            expenseDate, note, createDate, updateDate, categoryName);
+        do {
+          int id = rs.getInt("id");
+          // int userId = rs.getInt("user_id");
+          int categoryId = rs.getInt("category_id");
+          String name = rs.getString("name");
+          int price = rs.getInt("price");
+          Date expenseDate = rs.getDate("date");
+          String note = rs.getString("note");
+          Timestamp createDate = rs.getTimestamp("create_date");
+          Timestamp updateDate = rs.getTimestamp("update_date");
+          String categoryName = CategoryDAO.getCategoryName(categoryId);
 
-        expenseList.add(edb);
+          ExpenseDataBeans edb = new ExpenseDataBeans(id, userId, categoryId, name, price,
+              expenseDate, note, createDate, updateDate, categoryName, totalExpense); // totalExpenseをインスタンスに持たせたいのでExpenseDataBeansのフィールドにtotalExpenseを追加する
+
+          expenseList.add(edb);
+        } while (rs.next());
 
       }
 
+
       st.close();
+      stSum.close();
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -64,6 +84,7 @@ public class ExpenseDAO {
     return expenseList;
   }
   
+
   // 出費IDから出費情報を取得するメソッド（戻り値：インスタンス）
   public static ExpenseDataBeans findById(int expenseId) {
     System.out.println("ExpenseDAO、findById内");
@@ -117,71 +138,91 @@ public class ExpenseDAO {
   public static List<ExpenseDataBeans> searchExpense(int userId, String expenseName,
       String categoryId, String startDate, String endDate) {
     System.out.println("ExpenseDAO、searchExpense内");
-    List<ExpenseDataBeans> expenseList = new ArrayList<ExpenseDataBeans>();
+    List<ExpenseDataBeans> expenseList = null; // ここでとりあえずnullに定義しておかないとreturnする値が、必ずnullじゃ無くなってしまう可能性がある
     Connection con = null;
-    PreparedStatement st = null;
+    PreparedStatement stList = null;
+    PreparedStatement stSum = null;
+
     
     try {
       con = DBManager.getConnection();
       String sqlSelect = "SELECT * FROM expense WHERE user_id = ?";
       String sqlOrder = " ORDER BY date ASC";
+      String sqlTotalExpense = "SELECT SUM(price) AS totalExpense FROM expense WHERE user_id = ?";
+
 
       List<String> parameterList = new ArrayList<String>();
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sbList = new StringBuilder(sqlSelect);
+      StringBuilder sbSum = new StringBuilder(sqlTotalExpense);
 
-      sb.append(sqlSelect);
       if (!expenseName.equals("")) {
-        sb.append(" AND name LIKE CONCAT('%',?,'%')");
+        sbList.append(" AND name LIKE CONCAT('%',?,'%')");
+        sbSum.append(" AND name LIKE CONCAT('%',?,'%')");
         parameterList.add(expenseName);
       }
       if (!categoryId.equals("")) {
-        sb.append(" AND category_id = ?");
+        sbList.append(" AND category_id = ?");
+        sbSum.append(" AND category_id = ?");
         parameterList.add(categoryId);
       }
       if (!startDate.equals("") && !endDate.equals("")) {
-        sb.append(" AND date BETWEEN ? AND ?");
+        sbList.append(" AND date BETWEEN ? AND ?");
+        sbSum.append(" AND date BETWEEN ? AND ?");
+
         parameterList.add(startDate);
         parameterList.add(endDate);
       }
 
-      /*
-       * if (!price.equals("")) { sb.append(" AND price = ?"); parameterList.add(price); } if
-       * (!note.equals("")) { sb.append("AND note LIKE CONCAT('%',?,'%')"); parameterList.add(note);
-       * }
-       */
+      sbList.append(sqlOrder);
 
-      sb.append(sqlOrder);
+      stList = con.prepareStatement(sbList.toString());
+      stSum = con.prepareStatement(sbSum.toString());
+      stList.setInt(1, userId);
+      stSum.setInt(1, userId);
 
-
-      st = con.prepareStatement(sb.toString());
-      st.setInt(1, userId);
 
       for (int i = 0; i < parameterList.size(); i++) {
-        st.setString(i + 2, parameterList.get(i));
-      }
-      ResultSet rs = st.executeQuery();
-
-
-      while (rs.next()) {
-        int id = rs.getInt("id");
-        // int userId = rs.getInt("user_id");
-        int categoryId2 = rs.getInt("category_id");
-        String name = rs.getString("name");
-        int price2 = rs.getInt("price");
-        Date expenseDate = rs.getDate("date");
-        String note2 = rs.getString("note");
-        Timestamp createDate = rs.getTimestamp("create_date");
-        Timestamp updateDate = rs.getTimestamp("update_date");
-        String categoryName = CategoryDAO.getCategoryName(categoryId2);
-
-        ExpenseDataBeans edb = new ExpenseDataBeans(id, userId, categoryId2, name, price2,
-            expenseDate, note2, createDate, updateDate, categoryName);
-
-        expenseList.add(edb);
-
+        stList.setString(i + 2, parameterList.get(i));
+        stSum.setString(i + 2, parameterList.get(i));
       }
 
-      st.close();
+      ResultSet rsSum = stSum.executeQuery();
+
+      int totalExpense = 0;
+      if (rsSum.next()) {
+        totalExpense = rsSum.getInt("totalExpense");
+      }
+
+
+      // 苦肉の策だが、ここで、do whileを作成（expenseListをnullで定義した件について）
+      ResultSet rsList = stList.executeQuery();
+
+      if (rsList.next()) {
+        expenseList = new ArrayList<ExpenseDataBeans>();
+
+        do {
+          int id = rsList.getInt("id");
+          // int userId = rs.getInt("user_id");
+          int categoryId2 = rsList.getInt("category_id");
+          String name = rsList.getString("name");
+          int price2 = rsList.getInt("price");
+          Date expenseDate = rsList.getDate("date");
+          String note2 = rsList.getString("note");
+          Timestamp createDate = rsList.getTimestamp("create_date");
+          Timestamp updateDate = rsList.getTimestamp("update_date");
+          String categoryName = CategoryDAO.getCategoryName(categoryId2);
+
+          ExpenseDataBeans edb = new ExpenseDataBeans(id, userId, categoryId2, name, price2,
+              expenseDate, note2, createDate, updateDate, categoryName, totalExpense);
+
+          expenseList.add(edb);
+
+        } while (rsList.next());
+      }
+
+
+      stList.close();
+      stSum.close();
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -200,13 +241,11 @@ public class ExpenseDAO {
   }
 
   // 出費を追加するメソッド（引数は全て、Stringのままで良い）
-  // expenseName, price, categoryId, expenseDate, note
-  public static boolean addExpenseSuccess(String userId, String expenseName, String price,
+  public static void addExpense(String userId, String expenseName, String price,
       String categoryId, String expenseDate, String note) {
     System.out.println("ExpenseDAO、addExpense内");
     Connection con = null;
     PreparedStatement st = null;
-    boolean result = false;
 
     try {
       con = DBManager.getConnection();
@@ -220,17 +259,14 @@ public class ExpenseDAO {
       st.setString(5, expenseDate);
       st.setString(6, note);
 
-      if (st.executeUpdate() == 1) {
-        result = true;
-      } else {
-        return result;
-      }
+      int result = st.executeUpdate();
+      System.out.println("result: " + result);
+
 
       st.close();
 
     } catch (SQLException e) {
       e.printStackTrace();
-      return result;
     } finally {
       if (con != null) {
         try {
@@ -241,20 +277,18 @@ public class ExpenseDAO {
       }
     }
 
-    return result;
   }
 
-  public static boolean updateExpenseSuccess(String expenseId, String userId, String expenseName,
+  public static void updateExpense(String expenseId, String userId, String expenseName,
       String price, String categoryId, String expenseDate, String note) {
     System.out.println("ExpenseDAO、updateExpense内");
     Connection con = null;
     PreparedStatement st = null;
-    boolean result = false;
 
     try {
       con = DBManager.getConnection();
       String sql =
-          "UPDATE expense " + "SET category_id=?, name=?, price=?, date=?, note=? WHERE id = ?";
+          "UPDATE expense SET category_id=?, name=?, price=?, date=?, note=? WHERE id = ?";
       st = con.prepareStatement(sql);
       st.setString(1, categoryId);
       st.setString(2, expenseName);
@@ -263,18 +297,13 @@ public class ExpenseDAO {
       st.setString(5, note);
       st.setString(6, expenseId);
 
-
-      if (st.executeUpdate() == 1) {
-        result = true;
-      } else {
-        return result;
-      }
+      int result = st.executeUpdate();
+      System.out.println("result: " + result);
 
       st.close();
 
     } catch (SQLException e) {
       e.printStackTrace();
-      return result;
     } finally {
       if (con != null) {
         try {
@@ -285,7 +314,6 @@ public class ExpenseDAO {
       }
     }
 
-    return result;
   }
 
 
@@ -301,12 +329,8 @@ public class ExpenseDAO {
       st = con.prepareStatement(sql);
       st.setString(1, expenseId);
 
-
-      if (st.executeUpdate() == 1) {
-        System.out.println("削除成功");
-      } else {
-        System.out.println("削除失敗");
-      }
+      int result = st.executeUpdate();
+      System.out.println("result: " + result);
 
       st.close();
 

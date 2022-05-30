@@ -33,28 +33,22 @@ public class ExpenseListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+      // sessionスコープにログイン中のユーザーがいるか確認
       HttpSession session = request.getSession();
-
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
       if (udb == null) {
         response.sendRedirect("LoginServlet");
         return;
       }
 
-      int userId = udb.getId();
-
       // 今ログインしているユーザーのIDをもとに、全ての出費を取得
+      int userId = udb.getId();
       List<ExpenseDataBeans> expenseList = ExpenseDAO.findAll(userId);
       request.setAttribute("expenseList", expenseList);
 
-      // 合計金額の計算（for_loop,他のやり方がありそう）
-      int totalExpense = 0;
-      for (int i = 0; i < expenseList.size(); i++) {
-        ExpenseDataBeans expense = expenseList.get(i);
-        totalExpense += expense.getPrice();
-      }
+      // 合計金額の取得
+      int totalExpense = expenseList != null ? expenseList.get(0).getTotalExpense() : 0;
       request.setAttribute("totalExpense", totalExpense);
-
 
       // expenseList.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.EXPENSE_LIST_PAGE).forward(request, response);
@@ -67,14 +61,11 @@ public class ExpenseListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       request.setCharacterEncoding("UTF-8"); // 文字化け防止
 
-
       // requestパラメターの取得
       String expenseName = request.getParameter("expense-name");
-      // String price = request.getParameter("price");
       String categoryId = request.getParameter("category");
       String startDate = request.getParameter("start-date");
       String endDate = request.getParameter("end-date");
-      // String note = request.getParameter("note");
 
       // ログイン中ユーザーのid取得
       HttpSession session = request.getSession();
@@ -82,16 +73,12 @@ public class ExpenseListServlet extends HttpServlet {
       int userId = udb.getId();
 
 
-      // ExpenseDAOに、検索用のメソッドを作成
+      // ExpenseDAOの検索用のメソッドから、リストを作成
       List<ExpenseDataBeans> expenseList =
-          ExpenseDAO.searchExpense(userId, expenseName, categoryId, startDate, endDate);
+          ExpenseDAO.searchExpense(userId, expenseName, categoryId, startDate, endDate);// この時点でnullかどうかを確認する必要がある。
 
-      // 合計金額の計算（for_loop,他のやり方がありそう）
-      int totalExpense = 0;
-      for (int i = 0; i < expenseList.size(); i++) {
-        ExpenseDataBeans expense = expenseList.get(i);
-        totalExpense += expense.getPrice();
-      }
+      // 合計金額の取得
+      int totalExpense = expenseList != null ? expenseList.get(0).getTotalExpense() : 0;
 
       // requestパラメターのセット
       request.setAttribute("expenseList", expenseList);
@@ -100,7 +87,6 @@ public class ExpenseListServlet extends HttpServlet {
       request.setAttribute("categoryId", categoryId);
       request.setAttribute("startDate", startDate);
       request.setAttribute("endDate", endDate);
-
 
 
       // expenseList.jspへフォワード

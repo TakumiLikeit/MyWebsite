@@ -15,6 +15,7 @@ public class ExpenseDataBeans implements Serializable {
   private Timestamp createDate;
   private Timestamp updateDate;
   private String categoryName;
+  private int totalExpense;
 
   public ExpenseDataBeans() {
     super();
@@ -34,6 +35,24 @@ public class ExpenseDataBeans implements Serializable {
     this.createDate = createDate;
     this.updateDate = updateDate;
     this.categoryName = categoryName;
+  }
+
+  // totalExpenseを後から追加したので、新しくコンストラクターを追加
+  public ExpenseDataBeans(int id, int userId, int categoryId, String name, int price,
+      Date expenseDate, String note, Timestamp createDate, Timestamp updateDate,
+      String categoryName, int totalExpense) {
+    super();
+    this.id = id;
+    this.userId = userId;
+    this.categoryId = categoryId;
+    this.name = name;
+    this.price = price;
+    this.expenseDate = expenseDate;
+    this.note = note;
+    this.createDate = createDate;
+    this.updateDate = updateDate;
+    this.categoryName = categoryName;
+    this.totalExpense = totalExpense;
   }
 
   // getterとsetter
@@ -117,6 +136,13 @@ public class ExpenseDataBeans implements Serializable {
     this.categoryName = categoryName;
   }
 
+  public int getTotalExpense() {
+    return totalExpense;
+  }
+
+  public void setTotalExpense(int totalExpense) {
+    this.totalExpense = totalExpense;
+  }
 
 
 
