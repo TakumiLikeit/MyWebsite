@@ -14,9 +14,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
-        .space-h {
-            height: 20px;
-        }
 
         .table-h {
             height: 50px;
@@ -34,12 +31,8 @@
 </head>
 
 <body>
-    <!--mb-3でマージンを作成する-->
     <header class="mb-3">
-        <!--headerの中に埋め込むイメージ-->
         <nav class="navbar navbar-dark bg-dark text-light">
-            <!--navってなんだ-->
-            <!--navをいれるとちょっと下がる-->
             <div class="container-fluid">
 
                 <div class="navbar-brand">
@@ -48,16 +41,12 @@
 
                 
                 <ul class="navbar-nav ml-auto">
-                    <!--横並べにする-->
                     <div class="form-inline">
-                        <!--リスト、classはnav-item-->
                         <li class="nav-item mr-2">
                         	<a class="nav-link navbar-text" href="UserDetailServlet">${userInfo.name} さん</a>
-                            <!-- <span class="navbar-text">${userInfo.name} さん</span> -->
                         </li>
 
                         <li class="nav-item">
-                            <!--nav-linkにするとアンダーバーが表示されない-->
                             <a class="nav-link text-danger" href="LogoutServlet">ログアウト</a>
                         </li>
                     </div>
@@ -67,51 +56,34 @@
         </nav>
     </header>
 
-    <!--<div class="space-h"></div>-->
-    <!--headerの下に隙間を作りたかった-->
-
     <div class="container-fluid">
         <c:if test="${errMsg!=null}">
         	<div class="alert alert-danger" role="alert">${errMsg} 該当する出費はありません。</div>
 		</c:if>
 
-        <!--my-1で上下にマージン追加-->
         <div class="offset-10 my-2">
             <a href="AddExpenseServlet">出費を追加する</a>
         </div>
 
         <div class="card mb-1">
-            <!--cardはテーブルのようなボックスを作り出す-->
-            <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
             <div class="card-header bg-secondary text-white">
                 <h5>検索条件</h5>
             </div>
-            <div class="space-h"></div>
-            <div class="car-body">
-                <!--とりあえずcontainerで囲む、offsetは必要なくなる?-->
-                <!--my-smで上下のマージンを追加-->
+            
+            <div class="car-body mt-4">
                 <div class="col-8 offset-2 my-sm-3">
-                    <!--全体をoffset-3で囲んでしまい、col-6をセットしてしまえば真ん中にフォーマットできる-->
-                    <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
                     <form action="ExpenseListServlet" method="post">
 
                         <div class="form-group row">
-                            <!--入力部品をform-groupで囲み-->
-                            <!--rowを入れることでformを横並びに-->
-                            <!--control-labelがcol-form-lableに改名されたらしい-->
                             <label for="exspense-name" class="col-lg-2 col-form-label">商品名</label>
                             <div class="col-lg-9">
-                                <!--ここのdivにもclassを付与して良い-->
                                 <input id="expense-name" name="expense-name" type="text" class="form-control" value="${expenseName}">
-                                <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
 
-                        <!--カテゴリはcheckbox,select,radioなどがあるが、selectが良い-->
                         <div class="form-group row">
                             <label for="category" class="col-lg-2 col-form-label">カテゴリ</label>
                             <div>
-                                <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
                                 <select id="category" name="category" class="form-control offset-1">
                                     <option ${categoryId.equals("")?"selected":""} value="">選択する</option>
                                     <option ${categoryId.equals("1")?"selected":""} value="1">食費</option>
@@ -151,17 +123,12 @@
 
         </div>
     </div>
-    </div>
 
-    <!--cardは2つに分けなくてもいいのだろうけど、card-headerを追加したいため作成する-->
     <div class="container-fluid mb-5">
         <div class="card">
-            <!--cardはテーブルのようなボックスを作り出す-->
-            <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
             <div class="card-header bg-secondary text-white">
                 <h5>出費一覧</h5>
             </div>
-            <!--最悪bodyを無くして、フォーマットを整える-->
             <div class="offset-10 my-3">
                 <a href=#totalExpense id="jump">合計金額へ飛ぶ</a>
             </div>
@@ -178,19 +145,14 @@
                             <th class="table-h col-3">金額</th>
                         </tr>
                     </thead>
+                    
                     <!--tbodyでtableのbody-->
-                	
-                	
-                	
                     <tbody>
                     	<c:forEach  var="expense" items="${expenseList}">
 		                        <tr>
 		                            <td class="table-h col-3"><fmt:formatDate value="${expense.expenseDate}" pattern="yyyy年MM月dd日" /></td>
-		                            <!-- categoryNameをbeansに追加する必要あり -->
 		                            <td class="table-h col-3">${expense.categoryName}</td>
 		                            <td>
-		                            	<!-- ここのexpenseにちゃんとidは入っているだろうか -->
-		                            	<!-- a hrefだと、doGetに飛ばされている可能性あり -->
 			                            <a href="UpdateExpenseServlet?id=${expense.id}" class="table-h col-3">${expense.name}</a>
 		                            </td>
 		                            <td class="table-h col-3">${expense.price}</td>
@@ -205,7 +167,6 @@
                 </table>            
 
         </div>
-    </div>
     </div>
 
 

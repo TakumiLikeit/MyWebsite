@@ -12,30 +12,11 @@
     <!-- import Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style type="text/css">
-        .space-h {
-            height: 25px;
-        }
-
-        .table-h {
-            height: 50px;
-        }
-
-        th {
-            font-size: 20px;
-            text-align: center;
-        }
-
-        td {
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
     <!--mb-3でマージンを作成する-->
     <header class="mb-3">
-        <!--headerの中に埋め込むイメージ-->
         
             <nav class="navbar navbar-dark bg-dark text-light">   
             	<div class="container-fluid">             
@@ -43,12 +24,11 @@
                         <h4>出費登録画面</h4>
                     </div>
 	                <ul class="navbar-nav ml-auto">
-	                    <!--横並べにする-->
+	                    <!--form-inlineで横並べにする-->
 	                    <div class="form-inline">
 	                        <!--リスト、classはnav-item-->
 	                        <li class="nav-item mr-2">
 	                        	<a class="nav-link navbar-text" href="UserDetailServlet">${userInfo.name} さん</a>
-	                            <!-- <span class="navbar-text">${userInfo.name} さん</span> -->
 	                        </li>
 	
 	                        <li class="nav-item">
@@ -62,19 +42,11 @@
         
     </header>
 
-    <!--<div class="space-h"></div>-->
-    <!--headerの下に隙間を作りたかった-->
-
     <div class="container-fluid">
     	<c:if test="${errMsg!=null}">
         	<div class="alert alert-danger" role="alert">${errMsg}</div>
 		</c:if>
 		
-		
-		
-    	<c:if test="${errMsgPrice!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsgPrice}</div>
-		</c:if>
         <div class="card mb-1">
             <!--cardはテーブルのようなボックスを作り出す-->
             <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
@@ -82,47 +54,35 @@
                 <h5>出費追加</h5>
             </div>
 
-            <div class="space-h"></div>
-            <div class="car-body">
-                <!--とりあえずcontainerで囲む、offsetは必要なくなる?-->
-                <!--myで上のマージンを追加-->
+            <div class="car-body mt-4">
                 <div class="col-8 offset-2 my-sm-3">
-                    <!--全体をoffset-3で囲んでしまい、col-6をセットしてしまえば真ん中にフォーマットできる-->
+                    <!--全体をoffsetで囲んでしまい、colをセットしてしまえば真ん中にフォーマットできる-->
                     <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
                     <form action="AddExpenseServlet" method="post">
 
                         <div class="form-group row">
                             <!--入力部品をform-groupで囲み-->
                             <!--rowを入れることでformを横並びに-->
-                            <!--control-labelがcol-form-lableに改名されたらしい-->
+                            <!--control-labelがcol-form-lableに改名された-->
                             <label for="exspense-name" class="col-lg-2 col-form-label">出費名</label>
                             <div class="col-lg-9">
-                                <!--ここのdivにもclassを付与して良い-->
+                            	<!--入力部分をform-controlで囲む-->
                                 <input id="expense-name" name="expense-name" type="text" class="form-control" value="${expenseName}">
-                                <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
 
 
                         <div class="form-group row">
-                            <!--入力部品をform-groupで囲み-->
-                            <!--rowを入れることでformを横並びに-->
-                            <!--control-labelがcol-form-lableに改名されたらしい-->
                             <label for="price" class="col-lg-2 col-form-label">値段</label>
                             <div class="col-lg-9">
-                                <!--ここのdivにもclassを付与して良い-->
                                 <input id="price" name="price" type="text" class="form-control" value="${price}">
-                                <!--入力部分をform-controlで囲む-->
                             </div>
                         </div>
 
-                        <!--カテゴリはcheckbox,select,radioなどがあるが、selectが良い-->
+						<!-- カテゴリはselect -->
                         <div class="form-group row">
                             <label for="category" class="col-lg-2 col-form-label">カテゴリ</label>
                             <div>
-                                <!--なぜかoffset-1を追加しないと、頭が合わなかった-->
-                                
-                                <!-- ここ変えた、5/25 -->
                                 <select id="category" name="category" class="form-control offset-1">
                                     <option ${categoryId.equals("")?"selected":""} value="">選択する</option>
                                     <option ${categoryId.equals("1")?"selected":""} value="1">食費</option>
@@ -150,10 +110,10 @@
                             </div>
                         </div>
 
+						<!-- メモはtextarea -->
                         <div class="form-group row">
                             <label for="note" class="col-lg-2 col-form-label">メモ</label>
                             <div class="col-lg-9">
-                            	<!-- textareaないの値の初期化は、value=ではなく、間に挟んでしまうのだと思う -->
                                 <textarea id="note" name="note" class="form-control" rows="4" cols="50">${note}</textarea>
                             </div>
                         </div>
@@ -164,11 +124,10 @@
             </div>
         </div>
 
-        <!--containerの外cardの外-->
+        <!--containerの中、cardの外-->
         <div class="mt-4">
             <a href="ExpenseListServlet">出費一覧へ戻る</a>
         </div>
-    </div>
     </div>
 
 </body>

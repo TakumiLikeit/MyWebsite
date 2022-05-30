@@ -52,7 +52,7 @@ public class ExpenseHelper {
       byte[] bytes = MessageDigest.getInstance(algorithm).digest(password.getBytes(charset));
       String encodeStr = DatatypeConverter.printHexBinary(bytes);
 
-      System.out.println(encodeStr);
+      // System.out.println(encodeStr);
       return encodeStr;
 
     } catch (NoSuchAlgorithmException e) {
