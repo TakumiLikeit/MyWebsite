@@ -50,18 +50,18 @@ public class UserWithdrawServlet extends HttpServlet {
 
       // ユーザーのデータを削除する処理、と、ユーザーIDが一致する出費データの削除をする処理
 
-      // requestパラメター取得（セッションで良い）
+      // sessionのログイン中のユーザーのデータを取得
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
 
-      // ユーザーIDは必ず取得
-      int userId = udb.getId();
+      // ユーザーIDを取得
+      int userId = udb != null ? udb.getId() : 0;
       System.out.println("userId: " + userId);
 
-      // UserDAOにユーザーのデータを削除するメソッドを追加
+      // ユーザーのデータを削除
       UserDAO.deleteUser(userId);
 
-      // ExpenseDAOに、ユーザーIDを元に出費を削除するメソッドを追加
+      // ユーザーIDを元に出費を削除
       ExpenseDAO.deleteExpenseByUserId(userId);
 
 

@@ -29,15 +29,13 @@ public class UserUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // sessionスコープにログイン中のユーザーがいるか確認
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-
       if (udb == null) {
         response.sendRedirect("LoginServlet");
         return;
       }
-
-      // request.setAttribute("user", udb);
 
       // userUpdate.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.USER_UPDATE_PAGE).forward(request, response);
@@ -50,17 +48,13 @@ public class UserUpdateServlet extends HttpServlet {
       request.setCharacterEncoding("UTF-8"); // 文字化け防止
 
       // requestパラメターの取得
-      // jspファイルでログインIDは変更できないようにしないといけない
       // String loginId = request.getParameter("login-id");
       String password = request.getParameter("password");
       String passwordConfirm = request.getParameter("password-confirm");
       String userName = request.getParameter("user-name");
 
-      // ここで、jspからパスワードゲットしていない時には、passwordに入っている値は違う
-
-
       // 例外処理
-      // 問題がある場合、requestパラメターに値をセットして、フォワード
+      // 問題がある場合、requestパラメターに値をセットして、userUpdate.jspへフォワード
 
       StringBuilder errMsg = new StringBuilder();
       boolean existsErr = false;
@@ -69,8 +63,6 @@ public class UserUpdateServlet extends HttpServlet {
         errMsg.append("<ul><li>入力必須項目に空欄があります</li>");
         existsErr = true;
       }
-
-
       if (!password.equals(passwordConfirm)) {
         if (!existsErr) {
           errMsg.append("<ul>");
@@ -89,31 +81,26 @@ public class UserUpdateServlet extends HttpServlet {
         return;
       }
 
+      // ログインしているユーザーのユーザーIDを取得
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
+      int userId = 0;
+      if (udb != null) {
+        userId = udb.getId();
+      } else {
+        response.sendRedirect("LoginServlet");
+        return;
+      }
 
-
-      int userId = udb.getId();
-
-
-      // 問題がない場合、はUserDAOのメソッドによってデータを更新し、ユーザー詳細画面へリダイレクト
-      // パスワードがどちらも、空欄かどうか（""かどうか）は、UserDAOのメソッド内で判断する
-      // パスワード暗号化は、UserDAOの方で行う
+      // 問題がない場合、データを更新し、ユーザー詳細画面へリダイレクト
+      // UserDAO、updateUser内で、パスワードの暗号化、空欄かどうかの判断、を行う
       UserDAO.updateUser(userId, password, passwordConfirm, userName);
-      
 
       // ユーザーIDから該当するユーザーを取得
       UserDataBeans updatedUdb = null;
       updatedUdb = UserDAO.getUserById(userId);
 
-      if (updatedUdb == null) {
-        System.out.println("updatedUdb: null");
-      } else {
-        System.out.println("updatedUdb: not null");
-
-      }
-
-
+      // sessionスコープのユーザーのインスタンスを削除し、新しいものを追加
       session.removeAttribute("userInfo");
       session.setAttribute("userInfo", updatedUdb);
 
@@ -122,5 +109,4 @@ public class UserUpdateServlet extends HttpServlet {
 
 
 	}
-
 }

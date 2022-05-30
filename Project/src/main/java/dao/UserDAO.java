@@ -59,7 +59,7 @@ public class UserDAO {
   }
 
   // ユーザーIDを元にユーザーのデーターを取得するメソッド（戻り値：インスタンス）
-  public static UserDataBeans getUserById(int userId) { // throws SQLException
+  public static UserDataBeans getUserById(int userId) {
     UserDataBeans udb = null;
     Connection con = null;
     PreparedStatement st = null;

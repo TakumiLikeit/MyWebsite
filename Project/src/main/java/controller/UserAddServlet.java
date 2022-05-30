@@ -48,23 +48,17 @@ public class UserAddServlet extends HttpServlet {
 
 
       // 例外処理
-      // password == passwordConfirmかチェック
-      // ExpenseHelper(?)に、空欄があるかどうかのメソッドを追加
+      // 空欄項目があるか、同じログインIDが存在するか、パスワードが一致するか確認
       // 問題がある場合、userAdd.jspへフォワードしなおす
-
 
       StringBuilder errMsg = new StringBuilder();
       boolean existsErr = false;
 
-
-      // - - - - - - - - - - - - - コピペして、修正を加えた部分
       if (UserHelper.isEmpty(loginId, password, passwordConfirm, userName)) {
         errMsg.append("<ul><li>入力必須項目に空欄があります</li>");
         existsErr = true;
       }
-
       if (UserDAO.existsLoginId(loginId)) {
-        // request.setAttribute("errMsgPrice", "値段は正の半角数字で入力してください");
         if (!existsErr) {
           errMsg.append("<ul>");
         }
@@ -72,9 +66,7 @@ public class UserAddServlet extends HttpServlet {
 
         existsErr = true;
       }
-
       if (!password.equals(passwordConfirm)) {
-        // request.setAttribute("errMsgPrice", "値段は0より大きいものを入力してください");
         if (!existsErr) {
           errMsg.append("<ul>");
         }
@@ -82,23 +74,9 @@ public class UserAddServlet extends HttpServlet {
 
         existsErr = true;
       }
-      // - - - - - - - - - - - - -
-
-
-      /*
-       * if (UserHelper.isEmpty(loginId, password, passwordConfirm, userName)) {
-       * request.setAttribute("errMsg", "必須項目に空欄のものがあります"); existsErr = true; }
-       * 
-       * // !UserHelper.isSame(password, passwordConfirm) if (!password.equals(passwordConfirm)) {
-       * request.setAttribute("errMsgPassword", "パスワードが一致しません"); existsErr = true; }
-       * 
-       * if (UserDAO.existsLoginId(loginId)) { request.setAttribute("errMsgLoginId",
-       * "同じログインIDの人が既に存在します"); existsErr = true; }
-       */
 
       // パスワード暗号化
       String encodedPassword = ExpenseHelper.encodePassword(password);
-
 
       if (existsErr) {
         errMsg.append("</ul>");
@@ -110,9 +88,7 @@ public class UserAddServlet extends HttpServlet {
         return;
       }
 
-      // 問題がない場合、UserDAOにユーザーを追加するメソッドを追加して
-      // LoginServletへリダイレクト
-
+      // 問題がない場合、ユーザーを追加し、LoginServletへリダイレクト
       UserDAO.addUser(loginId, userName, encodedPassword);
       response.sendRedirect("LoginServlet");
 

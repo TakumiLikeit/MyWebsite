@@ -50,7 +50,7 @@
 
         <div class="card">
             <div class="card-header">
-                <p class="mt-3">${user.name} さん、本当に退会しますか？</p>
+                <p class="mt-3">${userInfo.name} さん、本当に退会しますか？</p>
             </div>
             <div class="card-body my-sm-4">
 
