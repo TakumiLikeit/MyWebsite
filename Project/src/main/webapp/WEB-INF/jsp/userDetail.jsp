@@ -34,8 +34,9 @@
     <!--mb-3でマージンを作成する-->
     <header class="mb-3">
         <!--headerの中に埋め込むイメージ-->
-        <div class="container-fluid">
-            <nav class="navbar navbar-dark bg-dark text-light">                
+		<nav class="navbar navbar-dark bg-dark text-light">   
+			<div class="container-fluid">
+                         
                     <div class="navbar-brand">
                         <h4>ユーザー詳細画面</h4>
                     </div>
@@ -55,8 +56,9 @@
 	                    </li>
 	                </div>
                 </ul>
-            </nav>
-        </div>
+			</div>
+		</nav>
+
     </header>
 
     <!--<div class="space-h"></div>-->

@@ -34,8 +34,9 @@
     <!--mb-3でマージンを作成する-->
     <header class="mb-3">
         <!--headerの中に埋め込むイメージ-->
-        <div class="container-fluid">
-            <nav class="navbar navbar-dark bg-dark text-light">                
+		<nav class="navbar navbar-dark bg-dark text-light">
+			 <div class="container-fluid">
+                            
                     <div class="navbar-brand">
                         <h4>新規登録画面</h4>
                     </div>
@@ -54,8 +55,8 @@
                         </li>
                     </div>
                 </ul>
-            </nav>
-        </div>
+        	</div>
+		</nav>
     </header>
 
     <!--<div class="space-h"></div>-->
@@ -65,12 +66,7 @@
     	<c:if test="${errMsg!=null}">
         	<div class="alert alert-danger" role="alert">${errMsg}</div>
 		</c:if>
-    	<c:if test="${errMsgPassword!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsgPassword}</div>
-		</c:if>
-    	<c:if test="${errMsgLoginId!=null}">
-        	<div class="alert alert-danger" role="alert">${errMsgLoginId}</div>
-		</c:if>
+
         <div class="card mb-1">
             <!--cardはテーブルのようなボックスを作り出す-->
             <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
