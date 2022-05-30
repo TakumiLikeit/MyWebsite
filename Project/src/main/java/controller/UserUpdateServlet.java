@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -103,17 +102,9 @@ public class UserUpdateServlet extends HttpServlet {
       UserDAO.updateUser(userId, password, passwordConfirm, userName);
       
 
+      // ユーザーIDから該当するユーザーを取得
       UserDataBeans updatedUdb = null;
-
-
-      try {
-        System.out.println("try-catchの中");
-
-        // UserDAO内に、新しくメソッドを追加, ログインID（もしくはユーザーID）だけでユーザーのインスタンスを取得できるようにする
-        updatedUdb = UserDAO.getUserById(userId);// ちゃんとupdateはできてるが、ここでudbがnullになっている
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+      updatedUdb = UserDAO.getUserById(userId);
 
       if (updatedUdb == null) {
         System.out.println("updatedUdb: null");

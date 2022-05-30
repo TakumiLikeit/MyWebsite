@@ -41,7 +41,14 @@ public class DeleteExpenseServlet extends HttpServlet {
       }
 
       // 出費IDを取得
-      int expenseId = Integer.valueOf(request.getParameter("id"));
+      String expenseIdStr = request.getParameter("id");
+      if (expenseIdStr == null) {
+        response.sendRedirect("ExpenseListServlet");
+        return;
+      }
+
+      // 取得した出費IDを元に、出費データを取得
+      int expenseId = Integer.valueOf(expenseIdStr);
       ExpenseDataBeans edb = ExpenseDAO.findById(expenseId);
       request.setAttribute("expense", edb);
 

@@ -47,6 +47,7 @@ public class ExpenseListServlet extends HttpServlet {
       request.setAttribute("expenseList", expenseList);
 
       // 合計金額の取得
+      // expenseList自体がnullの場合、expenseList.get(0)とした時点で、NullPointerExceptionが発生する
       int totalExpense = expenseList != null ? expenseList.get(0).getTotalExpense() : 0;
       request.setAttribute("totalExpense", totalExpense);
 
@@ -75,7 +76,7 @@ public class ExpenseListServlet extends HttpServlet {
 
       // ExpenseDAOの検索用のメソッドから、リストを作成
       List<ExpenseDataBeans> expenseList =
-          ExpenseDAO.searchExpense(userId, expenseName, categoryId, startDate, endDate);// この時点でnullかどうかを確認する必要がある。
+          ExpenseDAO.searchExpense(userId, expenseName, categoryId, startDate, endDate);
 
       // 合計金額の取得
       int totalExpense = expenseList != null ? expenseList.get(0).getTotalExpense() : 0;

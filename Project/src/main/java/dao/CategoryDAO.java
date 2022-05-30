@@ -10,7 +10,7 @@ public class CategoryDAO {
 
 
 
-  // カテゴリー名を返す、メソッドを作成
+  // カテゴリー名を取得するメソッド（戻り値：文字列）
   public static String getCategoryName(int categoryId) {
     String categoryName = null;
     Connection con = null;
@@ -20,11 +20,10 @@ public class CategoryDAO {
       con = DBManager.getConnection();
       String sql = "SELECT * FROM category WHERE id = ?";
       st = con.prepareStatement(sql);
-      st.setInt(1, categoryId); // テストでidの代わりに1を代入
+      st.setInt(1, categoryId);
       ResultSet rs = st.executeQuery();
 
-
-      if (rs.next()) { // rs.next()を指定してあげないと読み込めない。
+      if (rs.next()) {
         categoryName = rs.getString("name");
       } else {
         categoryName = "不明";
@@ -33,7 +32,6 @@ public class CategoryDAO {
       st.close();
 
     } catch (SQLException e) {
-      // TODO 自動生成された catch ブロック
       e.printStackTrace();
     } finally {
 
@@ -45,7 +43,6 @@ public class CategoryDAO {
         e.printStackTrace();
       }
     }
-
 
     return categoryName;
   }

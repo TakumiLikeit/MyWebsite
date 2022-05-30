@@ -29,7 +29,6 @@ public class UserAddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
       // userAdd.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.USER_ADD_PAGE).forward(request, response);
 

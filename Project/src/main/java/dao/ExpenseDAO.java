@@ -16,7 +16,7 @@ public class ExpenseDAO {
   // 全ての出費を取得するメソッド（戻り値：リスト）
   public static List<ExpenseDataBeans> findAll(int userId) {
     System.out.println("ExpenseDAO、findAll内");
-    List<ExpenseDataBeans> expenseList = null; // new ArrayList<ExpenseDataBeans>()
+    List<ExpenseDataBeans> expenseList = null; // expenseListはnullで初期化
     Connection con = null;
     PreparedStatement st = null;
     PreparedStatement stSum = null;
@@ -26,21 +26,22 @@ public class ExpenseDAO {
       String str1 = "SELECT * FROM expense WHERE user_id = ? ORDER BY date ASC";
       String str2 = "SELECT SUM(price) AS totalExpense FROM expense WHERE user_id = ?";
 
-
+      // 合計金額を取得
       stSum = con.prepareStatement(str2);
-      stSum.setInt(1, userId);// テスト的に1を代入してみる
+      stSum.setInt(1, userId);
       ResultSet rsSum = stSum.executeQuery();
 
       int totalExpense = 0;
       if (rsSum.next()) {
         totalExpense = rsSum.getInt("totalExpense");
-        System.out.println("totalExpense: " + totalExpense);
       }
 
+      // 該当する出費を取得
       st = con.prepareStatement(str1);
-      st.setInt(1, userId);// テスト的に1を代入してみる
+      st.setInt(1, userId);
       ResultSet rs = st.executeQuery();
 
+      // 該当する出費がある場合、expenseListをArrayListで再定義して、取得した出費をリストに追加
       if (rs.next()) {
         expenseList = new ArrayList<ExpenseDataBeans>();
 
@@ -96,14 +97,12 @@ public class ExpenseDAO {
       con = DBManager.getConnection();
       String sql = "SELECT * FROM expense WHERE id = ?";
       st = con.prepareStatement(sql);
-      st.setInt(1, expenseId);// テスト的に1を代入してみる
+      st.setInt(1, expenseId);
       ResultSet rs = st.executeQuery();
-
-      
       
       if (rs.next()) {
         // int id = rs.getInt("id");
-        edb.setId(rs.getInt("id")); // expenseId
+        edb.setId(expenseId);
         edb.setUserId(rs.getInt("user_id"));
         int categoryId = rs.getInt("category_id");
         edb.setCategoryId(categoryId);
@@ -138,7 +137,7 @@ public class ExpenseDAO {
   public static List<ExpenseDataBeans> searchExpense(int userId, String expenseName,
       String categoryId, String startDate, String endDate) {
     System.out.println("ExpenseDAO、searchExpense内");
-    List<ExpenseDataBeans> expenseList = null; // ここでとりあえずnullに定義しておかないとreturnする値が、必ずnullじゃ無くなってしまう可能性がある
+    List<ExpenseDataBeans> expenseList = null; // expenseListはnullで初期化
     Connection con = null;
     PreparedStatement stList = null;
     PreparedStatement stSum = null;
@@ -150,11 +149,12 @@ public class ExpenseDAO {
       String sqlOrder = " ORDER BY date ASC";
       String sqlTotalExpense = "SELECT SUM(price) AS totalExpense FROM expense WHERE user_id = ?";
 
-
+      // PreparedStatementで使うパラメターを格納するリストと、SQL文を組み立てるStringBuilderを作成
       List<String> parameterList = new ArrayList<String>();
       StringBuilder sbList = new StringBuilder(sqlSelect);
       StringBuilder sbSum = new StringBuilder(sqlTotalExpense);
 
+      // 条件により、リストにパラメターを格納し、StringBuilderでSQL文を組み立てる
       if (!expenseName.equals("")) {
         sbList.append(" AND name LIKE CONCAT('%',?,'%')");
         sbSum.append(" AND name LIKE CONCAT('%',?,'%')");
@@ -165,7 +165,7 @@ public class ExpenseDAO {
         sbSum.append(" AND category_id = ?");
         parameterList.add(categoryId);
       }
-      if (!startDate.equals("") && !endDate.equals("")) {
+      if (!(startDate.equals("") || endDate.equals(""))) {
         sbList.append(" AND date BETWEEN ? AND ?");
         sbSum.append(" AND date BETWEEN ? AND ?");
 
@@ -173,28 +173,30 @@ public class ExpenseDAO {
         parameterList.add(endDate);
       }
 
+      // 日付順に並び替えをする、命令文を追加
       sbList.append(sqlOrder);
 
+      // SQL文をPreparedStatementに挿入し、userIdをindex=1にセット
       stList = con.prepareStatement(sbList.toString());
       stSum = con.prepareStatement(sbSum.toString());
       stList.setInt(1, userId);
       stSum.setInt(1, userId);
 
-
+      // userIdは必ずindex=1の値にセットするので、indexは2から始める
       for (int i = 0; i < parameterList.size(); i++) {
         stList.setString(i + 2, parameterList.get(i));
         stSum.setString(i + 2, parameterList.get(i));
       }
 
+      // 合計金額を先に取得
       ResultSet rsSum = stSum.executeQuery();
-
       int totalExpense = 0;
       if (rsSum.next()) {
         totalExpense = rsSum.getInt("totalExpense");
       }
 
-
-      // 苦肉の策だが、ここで、do whileを作成（expenseListをnullで定義した件について）
+      // 該当するリストを取得
+      // 該当する出費がある場合、expenseListをArrayListで再定義して、取得した出費をリストに追加
       ResultSet rsList = stList.executeQuery();
 
       if (rsList.next()) {
@@ -240,7 +242,7 @@ public class ExpenseDAO {
     return expenseList;
   }
 
-  // 出費を追加するメソッド（引数は全て、Stringのままで良い）
+  // 出費を追加するメソッド（戻り値：なし）（引数は全て、Stringのままで良い）
   public static void addExpense(String userId, String expenseName, String price,
       String categoryId, String expenseDate, String note) {
     System.out.println("ExpenseDAO、addExpense内");
@@ -279,6 +281,7 @@ public class ExpenseDAO {
 
   }
 
+  // 出費を更新するメソッド（戻り値：なし）
   public static void updateExpense(String expenseId, String userId, String expenseName,
       String price, String categoryId, String expenseDate, String note) {
     System.out.println("ExpenseDAO、updateExpense内");
@@ -316,7 +319,7 @@ public class ExpenseDAO {
 
   }
 
-
+  // 出費を削除するメソッド（戻り値：なし）
   public static void deleteExpense(String expenseId) {
     System.out.println("ExpenseDAO、deleteExpense内");
     Connection con = null;
@@ -348,6 +351,7 @@ public class ExpenseDAO {
 
   }
 
+  // 退会するユーザーの出費を削除するメソッド（戻り値：なし）
   public static void deleteExpenseByUserId(int userId) {
     System.out.println("ExpenseDAO、deleteExpenseByUserId内");
     Connection con = null;

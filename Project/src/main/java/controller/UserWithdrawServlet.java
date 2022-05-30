@@ -30,15 +30,13 @@ public class UserWithdrawServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // sessionスコープにログイン中のユーザーがいるか確認
       HttpSession session = request.getSession();
       UserDataBeans udb = (UserDataBeans) session.getAttribute("userInfo");
-
       if (udb == null) {
         response.sendRedirect("LoginServlet");
         return;
       }
-
-      request.setAttribute("user", udb);
 
       // userWithdraw.jspへフォワード
       request.getRequestDispatcher(ExpenseHelper.USER_WITHDRAW_PAGE).forward(request, response);
