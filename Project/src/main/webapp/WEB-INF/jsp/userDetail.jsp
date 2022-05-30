@@ -10,30 +10,10 @@
     <!-- import Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style type="text/css">
-        .space-h {
-            height: 25px;
-        }
-
-        .table-h {
-            height: 50px;
-        }
-
-        th {
-            font-size: 20px;
-            text-align: center;
-        }
-
-        td {
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
-    <!--mb-3でマージンを作成する-->
     <header class="mb-3">
-        <!--headerの中に埋め込むイメージ-->
 		<nav class="navbar navbar-dark bg-dark text-light">   
 			<div class="container-fluid">
                          
@@ -42,45 +22,28 @@
                     </div>
                     
                 <ul class="navbar-nav ml-auto">
-	                <!--横並べにする-->
 	                <div class="form-inline">
-	                    <!--リスト、classはnav-item-->
 	                    <li class="nav-item mr-2">
 	                    	<a class="nav-link navbar-text" href="UserDetailServlet">${userInfo.name} さん</a>
-	                        <!-- <span class="navbar-text">${userInfo.name} さん</span> -->
 	                    </li>
 	
 	                    <li class="nav-item">
-	                        <!--nav-linkにするとアンダーバーが表示されない-->
 	                        <a class="nav-link text-danger" href="LogoutServlet">ログアウト</a>
 	                    </li>
 	                </div>
                 </ul>
 			</div>
 		</nav>
-
     </header>
-
-    <!--<div class="space-h"></div>-->
-    <!--headerの下に隙間を作りたかった-->
 
     <div class="container-fluid">
         <div class="card mb-1">
-            <!--cardはテーブルのようなボックスを作り出す-->
-            <!--container-fluidは画面幅に応じてサイズが流動的に変動-->
             <div class="card-header bg-secondary text-white">
                 <h5>ユーザー詳細</h5>
             </div>
 
-            <div class="space-h"></div>
-            <div class="car-body">
-                <!--とりあえずcontainerで囲む、offsetは必要なくなる?-->
-                <!--myで上のマージンを追加-->
+            <div class="car-body mt-4">
                 <div class="col-8 offset-4 my-sm-3">
-                    <!--全体をoffset-3で囲んでしまい、col-6をセットしてしまえば真ん中にフォーマットできる-->
-                    <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
-                    
-
 
                     <div class="form-group row">
                         <label for="login-id" class="col-lg-2">ログインID:</label>
@@ -119,11 +82,10 @@
             </div>
         </div>
 
-        <!--containerの外cardの外-->
+        <!--containerの中、cardの外-->
         <div class="mt-4">
             <a href="ExpenseListServlet">戻る</a>
         </div>
-    </div>
     </div>
 
 </body>

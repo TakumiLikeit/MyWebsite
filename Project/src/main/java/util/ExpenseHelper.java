@@ -28,9 +28,7 @@ public class ExpenseHelper {
 
 
 
-  // String, int, String, Date
   // 入力項目が空欄じゃないか確認
-
   public static boolean isEmpty(String expenseName, String price, String categoryId,
       String expenseDate) {
 
