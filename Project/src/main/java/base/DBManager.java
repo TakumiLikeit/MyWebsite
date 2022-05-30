@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBManager {
   private static final String URL = "jdbc:mysql://localhost/";
   private static final String DB_NAME = "expensemanagement";
-  private static final String PARAMETERS = "?useUnicode=true&characterEncoding=utf8&useSSL=true";
+  private static final String PARAMETERS = "?useUnicode=true&characterEncoding=utf8&useSSL=true"; // SSL=trueにした
   private static final String USER = "root";
   private static final String PASS = "password";
   
@@ -20,7 +20,7 @@ public class DBManager {
       Class.forName("com.mysql.jdbc.Driver");
 
       con = DriverManager.getConnection(URL + DB_NAME + PARAMETERS, USER, PASS);
-      System.out.println("DB Conncected");
+      System.out.println("DB 接続");
       return con;
 
     } catch (ClassNotFoundException | SQLException e) {
