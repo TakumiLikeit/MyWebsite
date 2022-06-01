@@ -54,7 +54,7 @@
                 <h5>出費追加</h5>
             </div>
 
-            <div class="car-body mt-4">
+            <div class="card-body mt-4">
                 <div class="col-8 offset-2 my-sm-3">
                     <!--全体をoffsetで囲んでしまい、colをセットしてしまえば真ん中にフォーマットできる-->
                     <!--labelのforはあってもなくても、見た目は変わらないと思われる-->
